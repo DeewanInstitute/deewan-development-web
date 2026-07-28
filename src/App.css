@@ -1,0 +1,26 @@
+#coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  place-content: center;
+  flex-grow: 1;
+  gap: 16px;
+  padding: 32px 20px;
+  text-align: center;
+}
+
+
+#coming-soon h1 {
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+#coming-soon p {
+  max-width: 480px;
+  color: var(--text);
+}
+
+#coming-soon .logo {
+  width: 40%;
+  height: auto;
+}
