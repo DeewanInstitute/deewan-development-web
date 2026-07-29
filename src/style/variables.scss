@@ -1,0 +1,30 @@
+// ─── Brand primaries ─────────────────────────────────────────────────────
+
+$primary-color: #0a5c61;
+$primary-color-dark: #094e52;
+$primary-color-light: #478589;
+
+$dark-blue: #094e52;
+$blue-light-one: #a9c6c8;
+$blue-light-two: #d3e2e3;
+$blue-light-three: #ebf2f2;
+
+// ─── Neutral palette ─────────────────────────────────────────────────────
+
+$cream: #faf7f2;
+$warm-white: #fff9f4;
+
+// Aliases of $primary-color for cleaner usage in new modules
+$blue: $primary-color;
+
+$text-dark: #074044;
+
+$white: #ffffff;
+$black: #000000;
+
+// ─── Accent palette ─────────────────────────────────────────────────────
+$coral: #e35447;
+$amber: #f2b833;
+$sage: #94b88f;
+$slate: #4d5761;
+$cloud: #f2f5f7;
