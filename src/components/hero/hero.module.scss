@@ -1,0 +1,81 @@
+@use "../../style/font.scss" as *;
+@use "../../style/variables.scss" as *;
+
+.hero {
+  background-image: url("/assets/images/others/network.webp");
+  background-repeat: no-repeat;
+  background-size: 45%;
+  background-color: $primary-color;
+  color: $white;
+  margin-inline: 4%;
+  height: 800px;
+  border-radius: 40px;
+  display: flex;
+
+
+  #title{ 
+    width: 24%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    font-family: "JetBrainsMono_Regular";
+    color: #0a5c61;
+    font-size: small;
+    padding: 8px 0px;
+    align-items: center;
+    justify-content: center;
+
+    #circle{
+        margin-inline: 2%; 
+        border: 10px solid $primary-color;
+        border-radius: 0.75rem;
+        background-color: $primary-color;
+    }
+  }
+  #white {
+    color: $white;
+    font-family: "JetBrainsMono_Regular";
+    font-size: 65px;
+    line-height: 100px !important;
+  }
+
+  #lightWhite {
+    color: $blue-light-three;
+    font-family: "JetBrainsMono_Regular";
+    font-size: 65px;
+    line-height: 70px !important;
+  }
+
+  #started {
+    background-color: $primary-color-dark;
+    color: $white;
+    letter-spacing: 1%;
+    font-family: "JetBrainsMono_Light";
+    padding: 18px 50px;
+    gap: 0.5rem;
+
+    &:hover,
+    &:active {
+      background-color: $white;
+      color: $primary-color-dark;
+      border: 2px solid $primary-color;
+    }
+  }
+
+  #stack {
+    background-color: $white;
+    color: $black;
+    font-family: "JetBrainsMono_Light";
+    padding: 18px 50px;
+    gap: 0.5rem;
+
+    &:hover,
+    &:active {
+      background-color: $black;
+      color: $white;
+      border: 2px solid $white;
+    }
+  }
+}
