@@ -1,3 +1,70 @@
 @use "../../style/font.scss" as *;
 @use "../../style/variables.scss" as *;
 
+.team {
+  background-image: url("../../assets/images/others/team1.webp");
+  background-size: contain; 
+  background-repeat: no-repeat;
+  background-position: top;
+  background-color: $primary-color;
+  padding-block: 5%;
+  padding-inline: 8%;
+
+  .heading {
+    font-family: "JetBrainsMono_SemiBold";
+    color: $white;
+    font-size: 45px;
+    margin-block: 3% 5%;
+  }
+
+  .card {
+    background-color: $white;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 5%;
+
+    .photo {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(135deg, $primary-color-light, $blue-light-one);
+    }
+
+    .info {
+      padding: 20px;
+      border-top: 3px solid $primary-color;
+
+      .role {
+        font-family: "JetBrainsMono_SemiBold";
+        color: $primary-color-dark;
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+
+      .name {
+        font-family: "Inter-Regular";
+        color: $text-dark;
+        font-size: 14px;
+        margin: 0;
+      }
+    }
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1%;
+
+    .dot,
+    .dotActive {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: $blue-light-one;
+    }
+
+    .dotActive {
+      background-color: $amber;
+    }
+  }
+}

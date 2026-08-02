@@ -1,0 +1,38 @@
+@use "../../style/font.scss" as *;
+@use "../../style/variables.scss" as *;
+
+#contact {
+  padding-inline: 8%;
+
+  .heading {
+    font-family: "JetBrainsMono_SemiBold";
+    font-size: 55px;
+    color: $primary-color-dark;
+    margin-top: 3%;
+  }
+
+  .description {
+    font-family: "Inter-Regular";
+    font-size: 18px;
+    color: $text-dark;
+  }
+
+  #contactForm {
+    background-color: $primary-color;
+    padding: 65px 65px;
+    label {
+      color: $white;
+      font-family: "JetBrainsMono_Regular";
+      text-transform: uppercase;
+      font-size: 15px;
+    }
+    input, textarea {
+      background-color: $white;
+      color: $primary-color-dark;
+      font-family: "JetBrainsMono_Regular";
+      border: 1px solid $primary-color-dark;
+      border-radius: 0px !important;
+      padding: 10px 10px;
+    }
+  }
+}

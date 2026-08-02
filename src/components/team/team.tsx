@@ -1,98 +1,44 @@
 import { Fragment } from "react/jsx-runtime";
-import "bootstrap";
+import style from "./team.module.scss";
+import Subheader from "../subheader/subheader";
+
+const teamMembers = [
+  { role: "Full Stack Developer and Trainer", name: "Team Member Name" },
+  { role: "Full Stack Developer and Trainer", name: "Team Member Name" },
+  { role: "Full Stack Developer and Trainer", name: "Team Member Name" },
+];
 
 function Team() {
   return (
     <Fragment>
-      <div>
+      <section className={style.team}>
+        <Subheader
+          data={{
+            title: "OUR TEAM",
+            color: "#0a5c61",
+            backgroundColor: "#ffffff",
+          }}
+        />
+        <h2 className={style.heading}>The Minds Behind the Solutions</h2>
         <div className="row">
-          <div className="col-lg-4">
-            <svg
-              aria-label="Placeholder"
-              className="bd-placeholder-img rounded-circle"
-              height="140"
-              preserveAspectRatio="xMidYMid slice"
-              role="img"
-              width="140"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Placeholder</title>
-              <rect
-                width="100%"
-                height="100%"
-                fill="var(--bs-secondary-color)"
-              ></rect>
-            </svg>{" "}
-            <h2 className="fw-normal">Heading</h2>{" "}
-            <p>
-              Some representative placeholder content for the three columns of
-              text below the carousel. This is the first column.
-            </p>{" "}
-            <p>
-              <a className="btn btn-secondary" href="#">
-                View details »
-              </a>
-            </p>{" "}
-          </div>
-          <div className="col-lg-4">
-            {" "}
-            <svg
-              aria-label="Placeholder"
-              className="bd-placeholder-img rounded-circle"
-              height="140"
-              preserveAspectRatio="xMidYMid slice"
-              role="img"
-              width="140"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Placeholder</title>
-              <rect
-                width="100%"
-                height="100%"
-                fill="var(--bs-secondary-color)"
-              ></rect>
-            </svg>{" "}
-            <h2 className="fw-normal">Heading</h2>{" "}
-            <p>
-              Another exciting bit of representative placeholder content. This
-              time, we've moved on to the second column.
-            </p>{" "}
-            <p>
-              <a className="btn btn-secondary" href="#">
-                View details »
-              </a>
-            </p>{" "}
-          </div>
-          <div className="col-lg-4">
-            <svg
-              aria-label="Placeholder"
-              className="bd-placeholder-img rounded-circle"
-              height="140"
-              preserveAspectRatio="xMidYMid slice"
-              role="img"
-              width="140"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Placeholder</title>
-              <rect
-                width="100%"
-                height="100%"
-                fill="var(--bs-secondary-color)"
-              ></rect>
-            </svg>{" "}
-            <h2 className="fw-normal">Heading</h2>{" "}
-            <p>
-              And lastly this, the third column of representative placeholder
-              content.
-            </p>{" "}
-            <p>
-              <a className="btn btn-secondary" href="#">
-                View details »
-              </a>
-            </p>{" "}
-          </div>{" "}
+          {teamMembers.map((member, index) => (
+            <div className="col-lg-4" key={index}>
+              <div className={style.card}>
+                <div className={style.photo}></div>
+                <div className={style.info}>
+                  <p className={style.role}>{member.role}</p>
+                  <p className={style.name}>{member.name}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+        <div className={style.dots}>
+          <span className={style.dotActive}></span>
+          <span className={style.dot}></span>
+          <span className={style.dot}></span>
+        </div>
+      </section>
     </Fragment>
   );
 }

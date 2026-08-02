@@ -1,0 +1,25 @@
+@use "../../style/font.scss" as *;
+@use "../../style/variables.scss" as *;
+
+.title {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  border-radius: 20px;
+  white-space: nowrap;
+  background-color: var(--background-color);
+  font-family: "JetBrainsMono_Regular";
+  color: var(--color);
+  font-size: small;
+  padding: 8px 20px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color);
+
+  .circle {
+    flex-shrink: 0;
+    margin-inline-end: 8px;
+    border-radius: 0.75rem;
+    background-color: var(--color);
+  }
+}

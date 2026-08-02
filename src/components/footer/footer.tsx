@@ -4,7 +4,7 @@ import style from "./footer.module.scss";
 function Footer() {
   return (
     <footer
-      className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
+      className="d-flex flex-wrap justify-content-between align-items-center py-3 border-top"
       id={style.footer}
     >
       <div className="col-md-4 d-flex align-items-center">
