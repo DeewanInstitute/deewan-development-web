@@ -20,22 +20,22 @@ function Navbar() {
         </div>
         <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
           <li className="px-2" id={style.navLink}>
-            <a href="#" className="nav-link px-2 link-secondary">
+            <a href="#about" className="nav-link px-2 link-secondary">
               About
             </a>
           </li>
           <li className="px-2" id={style.navLink}>
-            <a href="#" className="nav-link px-2">
+            <a href="#portfolio" className="nav-link px-2">
               Portfolio
             </a>
           </li>
           <li className="px-2" id={style.navLink}>
-            <a href="#" className="nav-link px-2">
+            <a href="#services" className="nav-link px-2">
               Services
             </a>
           </li>
           <li className="px-2" id={style.navLink}>
-            <a href="#" className="nav-link px-2">
+            <a href="#contact" className="nav-link px-2">
               Contact
             </a>
           </li>

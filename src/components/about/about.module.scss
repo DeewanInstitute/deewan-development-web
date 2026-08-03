@@ -2,10 +2,14 @@
 @use "../../style/variables.scss" as *;
 
 .about{
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    overflow: hidden;
+    background-color: $white;
     border-top: 3.5px solid $primary-color;
     border-bottom: 3.5px solid $primary-color;
-    margin-block: 5%;
-    margin-inline: 5%; 
+    padding-block: 5%;
     padding-inline: 5%;
 
     .heading{

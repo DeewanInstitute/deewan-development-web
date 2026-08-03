@@ -1,11 +1,20 @@
 import { Fragment } from "react/jsx-runtime";
+import { useRef } from "react";
 import style from "./hero.module.scss";
 import Subheader from "../subheader/subheader";
+import { useScrollPin } from "../../hooks/useScrollPin";
 function Hero() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  useScrollPin(heroRef, contentRef);
+
   return (
     <Fragment>
-      <div className={style.hero}>
-        <div className="row p-4 pb-0 pe-lg-0 pt-lg-3 align-items-end rounded-3">
+      <div ref={heroRef} className={style.hero}>
+        <div
+          ref={contentRef}
+          className="row p-4 pb-0 pe-lg-0 pt-lg-3 align-items-end rounded-3"
+        >
           <div className="col-lg-7 p-3 p-lg-5 pt-lg-5">
             <Subheader data={{ title: "ENGINEERING MODERNITY", color: "#0a5c61", backgroundColor: "#ffffff"}} />
 

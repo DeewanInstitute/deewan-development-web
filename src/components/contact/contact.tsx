@@ -1,14 +1,20 @@
 import { Fragment } from "react/jsx-runtime";
+import { useRef } from "react";
 import "bootstrap";
 import style from "./contact.module.scss";
 import Subheader from "../subheader/subheader";
+import { useScrollPin } from "../../hooks/useScrollPin";
 
 function Contact() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  useScrollPin(sectionRef, contentRef);
+
   return (
     <Fragment>
-      <section>
-        <div className="mx-auto py-5" id={style.contact}>
-          <div className="row align-items-center">
+      <section id="contact">
+        <div ref={sectionRef} className="mx-auto py-5" id={style.contact}>
+          <div ref={contentRef} className="row align-items-center">
             <div className="col-lg-4">
               <Subheader
                 data={{
@@ -23,7 +29,45 @@ function Contact() {
                 experts are ready to discuss your vision and develop a roadmap
                 tailored to your business.
               </p>
+              <div className="d-flex flex-column gap-3 pt-4">
+                <div className="row align-items-center" id={style.iconRow}>
+                  <div className="col-auto">
+                    <img src="/assets/images/icons/email.webp" alt="Email" />
+                  </div>
+                  <div className="d-flex flex-column col">
+                    <span className={style.light}>EMAIL</span>
+                    <span className={style.dark}>
+                      project@deewandevelopment.com
+                    </span>
+                  </div>
+                </div>
+                <div className="row align-items-center" id={style.iconRow}>
+                  <div className="col-auto">
+                    <img
+                      src="/assets/images/icons/telephone.webp"
+                      alt="Phone"
+                    />
+                  </div>
+                  <div className="d-flex flex-column col">
+                    <span className={style.light}>PHONE NUMBER</span>
+                    <span className={style.dark}>(962) 7-7820-2081</span>
+                  </div>
+                </div>
+                <div className="row align-items-center" id={style.iconRow}>
+                  <div className="col-auto">
+                    <img
+                      src="/assets/images/icons/location.webp"
+                      alt="Location"
+                    />
+                  </div>
+                  <div className="d-flex flex-column col">
+                    <span className={style.light}>LOCATION</span>
+                    <span className={style.dark}>11191, Al-Baouneyah St. 14, Amman</span>
+                  </div>
+                </div>
+              </div>
             </div>
+
             <div className="col-lg-8 w-50 mx-auto" id={style.contactForm}>
               <form className="row g-2 align-items-center">
                 <div className="col-md-5">
@@ -31,9 +75,10 @@ function Contact() {
                     Full Name
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
                     id="inputEmail4"
+                    placeholder="John Doe"
                   />
                 </div>
                 <div className="col-md-7">
@@ -41,21 +86,22 @@ function Contact() {
                     Email
                   </label>
                   <input
-                    type="password"
+                    type="email"
                     className="form-control"
                     id="inputPassword4"
+                    placeholder="john.doe@example.com"
                   />
                 </div>
                 <div className="col-12 pt-2">
                   <label htmlFor="inputAddress" className="form-label">
                     Interested Service(s)
                   </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="inputAddress"
-                    placeholder="1234 Main St"
-                  />
+                  <select className="form-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
                 </div>
                 <div className="col-12 pt-2">
                   <label htmlFor="inputAddress" className="form-label">
@@ -67,6 +113,11 @@ function Contact() {
                     id="inputAddress"
                     placeholder="1234 Main St"
                   />
+                </div>
+                <div className="col-12 mt-5">
+                  <button type="submit" className={`btn ${style.submitBtn}`}>
+                    SEND INQUIRY
+                  </button>
                 </div>
               </form>
             </div>

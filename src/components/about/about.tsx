@@ -1,12 +1,18 @@
 import { Fragment } from "react/jsx-runtime";
+import { useRef } from "react";
 import style from "./about.module.scss";
 import Subheader from "../subheader/subheader";
+import { useScrollPin } from "../../hooks/useScrollPin";
 
 function About() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  useScrollPin(sectionRef, contentRef);
+
   return (
     <Fragment>
-      <section className={style.about}>
-        <div className="row mx-auto">
+      <section id="about" ref={sectionRef} className={style.about}>
+        <div ref={contentRef} className="row mx-auto">
           <div
             className="col-lg-6 align-items-start align-content-center"
             id={style.right}

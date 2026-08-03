@@ -2,6 +2,11 @@
 @use "../../style/variables.scss" as *;
 
 #contact {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  overflow: hidden;
+  background-color: $white;
   padding-inline: 8%;
 
   .heading {
@@ -17,6 +22,26 @@
     color: $text-dark;
   }
 
+  #iconRow {
+    img {
+      width: 45px;
+      height: 45px;
+      margin-right: -11px;
+    }
+
+    .light {
+      font-family: "JetBrainsMono_Regular";
+      font-size: 15px;
+      color: $primary-color-dark;
+    }
+
+    .dark {
+      font-family: "JetBrainsMono_SemiBold";
+      font-size: 15px;
+      color: $primary-color-dark;
+    }
+  }
+
   #contactForm {
     background-color: $primary-color;
     padding: 65px 65px;
@@ -26,13 +51,25 @@
       text-transform: uppercase;
       font-size: 15px;
     }
-    input, textarea {
+    input,
+    textarea {
       background-color: $white;
       color: $primary-color-dark;
       font-family: "JetBrainsMono_Regular";
       border: 1px solid $primary-color-dark;
       border-radius: 0px !important;
       padding: 10px 10px;
+    }
+
+    .submitBtn {
+      background-color: #f2b833;
+      color: $white;
+      font-family: "JetBrainsMono_Regular";
+      text-transform: uppercase;
+      font-size: 15px;
+      width: 100%;
+      padding: 20px 20px;
+      border-radius: 0px !important;
     }
   }
 }
