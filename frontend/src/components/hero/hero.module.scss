@@ -1,0 +1,123 @@
+@use "../../style/font.scss" as *;
+@use "../../style/variables.scss" as *;
+
+.hero {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  overflow: hidden;
+  // Cast upward from this section's own top edge, so as the next section
+  // slides up to cover it, the shadow reads as one physical layer stacked
+  // above another rather than plain scrolling.
+  box-shadow: 0 -25px 50px -15px rgba(0, 0, 0, 0.35);
+  background-image: url("/assets/images/others/network.webp");
+  background-repeat: no-repeat;
+  background-size: 45%;
+  background-color: $primary-color;
+  color: $white;
+  margin-inline: 4%;
+  height: 800px;
+  border-radius: 40px;
+  display: flex;
+  margin-bottom: 5%; 
+
+  #title{ 
+    width: 24%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    font-family: "JetBrainsMono_Regular";
+    color: #0a5c61;
+    font-size: small;
+    padding: 8px 0px;
+    align-items: center;
+    justify-content: center;
+  }
+  #white {
+    color: $white;
+    font-family: "JetBrainsMono_Regular";
+    font-size: 65px;
+    line-height: 100px !important;
+  }
+
+  #lightWhite {
+    color: $blue-light-three;
+    font-family: "JetBrainsMono_Regular";
+    font-size: 65px;
+    line-height: 70px !important;
+  }
+
+  #started {
+    background-color: $primary-color-dark;
+    color: $white;
+    letter-spacing: 1%;
+    font-family: "JetBrainsMono_Light";
+    padding: 18px 50px;
+    gap: 0.5rem;
+
+    &:hover,
+    &:active {
+      background-color: $white;
+      color: $primary-color-dark;
+      border: 2px solid $primary-color;
+    }
+  }
+
+  #stack {
+    background-color: $white;
+    color: $black;
+    font-family: "JetBrainsMono_Light";
+    padding: 18px 50px;
+    gap: 0.5rem;
+
+    &:hover,
+    &:active {
+      background-color: $black;
+      color: $white;
+      border: 2px solid $white;
+    }
+  }
+
+  .heroImage {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 991px) {
+    height: auto;
+
+    .heroImage {
+      max-width: 60%;
+      margin-inline: auto;
+      display: block;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin-inline: 4%;
+    border-radius: 24px;
+
+    #title {
+      width: auto;
+      padding: 8px 16px;
+    }
+
+    #white,
+    #lightWhite {
+      font-size: 38px;
+      line-height: 1.2 !important;
+    }
+
+    #started,
+    #stack {
+      padding: 14px 30px;
+    }
+
+    .heroImage {
+      max-width: 75%;
+    }
+  }
+
+}

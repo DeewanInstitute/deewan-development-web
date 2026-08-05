@@ -1,0 +1,119 @@
+@use "../../style/font.scss" as *;
+@use "../../style/variables.scss" as *;
+
+#contact {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  overflow: hidden;
+  box-shadow: 0 -25px 50px -15px rgba(0, 0, 0, 0.35);
+  background-color: $white;
+  padding-inline: 8%;
+
+  .heading {
+    font-family: "JetBrainsMono_SemiBold";
+    font-size: 55px;
+    color: $primary-color-dark;
+    margin-top: 3%;
+  }
+
+  .description {
+    font-family: "Inter-Regular";
+    font-size: 18px;
+    color: $text-dark;
+  }
+
+  #iconRow {
+    img {
+      width: 45px;
+      height: 45px;
+      margin-right: -11px;
+    }
+
+    .light {
+      font-family: "JetBrainsMono_Regular";
+      font-size: 15px;
+      color: $primary-color-dark;
+    }
+
+    .dark {
+      font-family: "JetBrainsMono_SemiBold";
+      font-size: 15px;
+      color: $primary-color-dark;
+    }
+  }
+
+  #contactForm {
+    background-color: $primary-color;
+    padding: 65px 65px;
+    label {
+      color: $white;
+      font-family: "JetBrainsMono_Regular";
+      text-transform: uppercase;
+      font-size: 15px;
+    }
+    input,
+    textarea {
+      background-color: $white;
+      color: $primary-color-dark;
+      font-family: "JetBrainsMono_Regular";
+      border: 1px solid $primary-color-dark;
+      border-radius: 0px !important;
+      padding: 10px 10px;
+    }
+
+    .submitBtn {
+      background-color: #f2b833;
+      color: $white;
+      font-family: "JetBrainsMono_Regular";
+      text-transform: uppercase;
+      font-size: 15px;
+      width: 100%;
+      padding: 20px 20px;
+      border-radius: 0px !important;
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: default;
+      }
+    }
+
+    .statusSuccess,
+    .statusError {
+      font-family: "JetBrainsMono_Regular";
+      font-size: 14px;
+      margin: 0;
+      padding: 12px 14px;
+    }
+
+    .statusSuccess {
+      color: $primary-color-dark;
+      background-color: $white;
+    }
+
+    .statusError {
+      color: $white;
+      background-color: $coral;
+    }
+  }
+
+  @media (max-width: 991px) {
+    #contactForm {
+      width: 100% !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .heading {
+      font-size: 34px;
+    }
+
+    #contactForm {
+      padding: 35px 25px;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    padding-inline: max(8%, calc((100% - 1440px) / 2));
+  }
+}

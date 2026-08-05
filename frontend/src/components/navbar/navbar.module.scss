@@ -1,0 +1,174 @@
+@use "../../style/font.scss" as *;
+@use "../../style/variables.scss" as *;
+
+#navbar {
+  padding-inline: 4%;
+  #logo img {
+    width: 80%;
+  }
+
+  #navLink a {
+    font-family: "JetBrainsMono_Light";
+    font-size: large;
+    color: $slate !important;
+    transition:
+      color 0.2s ease,
+      border-bottom 0.2s ease;
+    &:active {
+      color: $primary-color;
+      border-bottom: 2px $primary-color solid;
+    }
+    &:hover {
+      color: $primary-color;
+      border-bottom: 2px $primary-color solid;
+    }
+  }
+
+  #button {
+    color: $white;
+    background-color: $primary-color-light;
+    font-family: "JetBrainsMono_Medium";
+    font-size: larger;
+    border-color: $primary-color-light !important;
+    padding: 15px 55px;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease;
+    &:hover {
+      color: $primary-color;
+      background-color: white;
+      border-color: $primary-color !important;
+    }
+  }
+
+  .menuToggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1001;
+
+    span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background-color: $primary-color;
+      border-radius: 2px;
+      transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+    }
+
+    &.menuToggleOpen {
+      span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
+  }
+
+  @media (min-width: 786px) {
+    #navbar {
+      padding-inline: 0% !important;
+      justify-content: space-between !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #logo img {
+      width: 140px;
+    }
+
+    #navLink a {
+      font-size: 16px;
+    }
+
+    #button {
+      font-size: 16px;
+      padding: 10px 30px;
+    }
+
+    .navList,
+    .ctaDesktop {
+      display: none;
+    }
+
+    .menuToggle {
+      display: flex;
+      margin-left: auto;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: $primary-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+
+  &.overlayOpen {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+.overlayNav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+
+  a {
+    font-family: "JetBrainsMono_Regular";
+    color: $white;
+    font-size: 28px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $blue-light-two;
+    }
+  }
+}
+
+.overlayButton {
+  color: $primary-color;
+  background-color: $white;
+  font-family: "JetBrainsMono_Medium";
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 42px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background-color: $blue-light-three;
+  }
+}

@@ -1,0 +1,24 @@
+@use "../../style/font.scss" as *;
+@use "../../style/variables.scss" as *;
+
+#footer {
+  position: relative;
+  z-index: 10;
+  background-color: $primary-color;
+  padding-inline: 5%;
+  .logo {
+    width: 40%;
+  }
+  #copyright {
+    font-family: "JetBrainsMono_SemiBold";
+    color: $white;
+  }
+  .icon {
+    width: 25px;
+    height: 25px;
+  }
+
+  @media (min-width: 1600px) {
+    padding-inline: max(5%, calc((100% - 1440px) / 2));
+  }
+}

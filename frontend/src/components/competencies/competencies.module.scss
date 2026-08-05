@@ -1,0 +1,173 @@
+@use "../../style/font.scss" as *;
+@use "../../style/variables.scss" as *;
+
+.competencies {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  overflow: hidden;
+  box-shadow: 0 -25px 50px -15px rgba(0, 0, 0, 0.35);
+  background-color: $cloud;
+  border-top: 3px solid $primary-color;
+  border-bottom: 3px solid $primary-color;
+  padding-top: 5%;
+  padding-inline: 8%;
+  padding-bottom: 9%; 
+
+  .heading {
+    font-family: "JetBrainsMono_SemiBold";
+    color: $primary-color-dark;
+    font-size: 60px;
+    margin-block: 2%;
+  }
+
+  .description {
+    font-family: "Inter-Regular";
+    color: $text-dark;
+    font-size: 20px;
+    margin-bottom: 4%;
+  }
+
+  .viewport {
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  .cardsTrack {
+    display: flex;
+    gap: 30px;
+    transition: transform 0.4s ease;
+    overflow-y: clip; 
+  }
+
+  .card {
+    position: relative;
+    flex: 0 0 300px;
+    width: 300px;
+    aspect-ratio: 4 / 3.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: $white;
+    border: 1px solid $blue-light-two;
+    border-radius: 16px;
+    text-align: center;
+    padding: 45px 20px 20px;
+    margin-top: 75px;
+
+    .iconWrapper {
+      position: absolute;
+      top: -75px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background-color: $primary-color;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 50%;
+        height: 50%;
+      }
+    }
+
+    .cardTitle {
+      font-family: "Inter-Regular";
+      font-weight: 700;
+      color: $black;
+      font-size: 25px;
+      margin-bottom: 20px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+
+      .tag {
+        font-family: "JetBrainsMono_Regular";
+        font-size: 11px;
+        color: $text-dark;
+        background-color: $cloud;
+        border: 1px solid $blue-light-two;
+        border-radius: 6px;
+        padding: 4px 10px;
+      }
+    }
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 3%;
+  }
+
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid $primary-color-dark;
+    background-color: transparent;
+    color: $primary-color-dark;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background-color: $primary-color-dark;
+      color: $white;
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+  }
+
+  .dots {
+    display: flex;
+    gap: 10px;
+
+    .dot,
+    .dotActive {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: $blue-light-two;
+      cursor: pointer;
+    }
+
+    .dotActive {
+      background-color: $primary-color-dark;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .heading {
+      font-size: 34px;
+    }
+
+    .description {
+      font-size: 16px;
+    }
+
+    .card {
+      flex-basis: 78vw;
+      width: 78vw;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    padding-inline: max(8%, calc((100% - 1440px) / 2));
+  }
+}

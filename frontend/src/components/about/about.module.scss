@@ -1,0 +1,68 @@
+@use "../../style/font.scss" as *;
+@use "../../style/variables.scss" as *;
+
+.about{
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    overflow: hidden;
+    box-shadow: 0 -25px 50px -15px rgba(0, 0, 0, 0.35);
+    background-color: $white;
+    border-top: 3.5px solid $primary-color;
+    border-bottom: 3.5px solid $primary-color;
+    padding-top: 5%;
+    padding-inline: 5%;
+  padding-bottom: 9%; 
+    .heading{
+        font-family: "JetBrainsMono_Regular";
+        color: $primary-color;
+        font-size: 80px;
+        text-align: start;
+        margin-block: 2%;
+    }
+
+    #right, #left{
+        padding-block: 4%;
+    }
+
+    #left{
+        border-left: 5px solid $primary-color;
+        padding-inline: 2%;
+
+        .subheading{
+            font-family: "JetBrainsMono_Regular";
+            color: $primary-color;
+            font-size: 40px;
+            text-align: start;
+            margin-block: 2%;
+        }
+
+        .description{
+            font-family: "Inter-Regular";
+            color: $text-dark;
+            font-size: 17px;
+            text-align: start;
+            margin-block: 2%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .heading {
+            font-size: 40px;
+        }
+
+        #left {
+            .subheading {
+                font-size: 28px;
+            }
+
+            .description {
+                font-size: 15px;
+            }
+        }
+    }
+
+    @media (min-width: 1600px) {
+        padding-inline: max(5%, calc((100% - 1440px) / 2));
+    }
+}
