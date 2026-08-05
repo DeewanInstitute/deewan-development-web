@@ -2,6 +2,8 @@
 @use "../../style/variables.scss" as *;
 
 #footer {
+  position: relative;
+  z-index: 10;
   background-color: $primary-color;
   padding-inline: 5%;
   .logo {

@@ -2,27 +2,44 @@ import { Fragment } from "react/jsx-runtime";
 import { useEffect, useRef, useState } from "react";
 import style from "./portfolio.module.scss";
 import Subheader from "../subheader/subheader";
+import { USALProvider } from "@usal/react";
 
 const slides = [
   {
-    image: "../../assets/images/portfolio/DIDesktop.webp",
-    alt: "Deewan Institute Desktop",
+    title: "Deewan Institute — Web Platform",
+    description:
+      "A complete digital learning experience for Deewan Institute, redesigned from the ground up with a focus on clarity, performance, and a modern visual identity across every screen.",
+    image: "/assets/images/portfolio/DIDesktop.webp",
+    alt: "Deewan Institute desktop view",
   },
   {
+    title: "Deewan Institute — Mobile Experience",
+    description:
+      "The same platform, reimagined for mobile: a streamlined navigation system and touch-first interactions that keep learners engaged on any device.",
     image: "/assets/images/portfolio/DIMobile.webp",
-    alt: "Deewan Institute Mobile",
+    alt: "Deewan Institute mobile view",
   },
   {
+    title: "Deewan Tourism — Web Platform",
+    description:
+      "An immersive booking and discovery experience for Deewan Tourism, blending rich imagery with a fast, intuitive interface to help travelers plan with confidence.",
     image: "/assets/images/portfolio/DTDesktop.webp",
-    alt: "Deewan Toursim Desktop",
+    alt: "Deewan Tourism desktop view",
   },
   {
+    title: "Deewan Tourism — Mobile Experience",
+    description:
+      "A mobile-first companion to the Deewan Tourism platform, designed for on-the-go browsing, quick bookings, and seamless access to travel itineraries.",
     image: "/assets/images/portfolio/DTMobile.webp",
-    alt: "Deewan Toursim Mobile",
+    alt: "Deewan Tourism mobile view",
   },
 ];
 
-const SCROLL_PER_SLIDE_VH = 100;
+// How long (in viewport-heights) the section stays pinned while the
+// carousel scrubs through the remaining slides — a fixed constant, not a
+// measurement, so it's expressed directly as a spacer height in the JSX
+// below (see hero.module.scss for why a fixed budget matters).
+const EXTRA_SCROLL_VH = (slides.length - 1) * 100;
 
 // Neither offsetTop nor getBoundingClientRect() can be trusted directly here:
 // once a position:sticky element is actively stuck, both are observed to
@@ -45,70 +62,33 @@ function getDocumentTop(el: HTMLElement) {
 
 function Portfolio() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const portfolioRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const overflowRef = useRef(0);
-  const extraScrollRef = useRef(0);
 
-  const [wrapperHeight, setWrapperHeight] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
   const [carouselProgress, setCarouselProgress] = useState(0);
 
   useEffect(() => {
-    // Both the wrapper's scroll-scrub height AND the vertical-reveal
-    // overflow are derived from the SAME measurement here, so they can
-    // never drift out of sync with each other.
-    const updateMeasurements = () => {
-      if (!portfolioRef.current) return;
-      const ownHeight = portfolioRef.current.getBoundingClientRect().height;
-      overflowRef.current = Math.max(0, ownHeight - window.innerHeight);
-      const extraScroll =
-        (slides.length - 1) *
-        (window.innerHeight * (SCROLL_PER_SLIDE_VH / 100));
-      extraScrollRef.current = extraScroll;
-      setWrapperHeight(ownHeight + extraScroll);
+    const updateViewportWidth = () => {
       if (viewportRef.current)
         setViewportWidth(viewportRef.current.clientWidth);
     };
-
-    updateMeasurements();
-
-    const resizeObserver = new ResizeObserver(updateMeasurements);
-    if (portfolioRef.current) resizeObserver.observe(portfolioRef.current);
+    updateViewportWidth();
+    const resizeObserver = new ResizeObserver(updateViewportWidth);
     if (viewportRef.current) resizeObserver.observe(viewportRef.current);
 
-    // The sticky section stays pinned for exactly `extraScroll` px of scroll
-    // (the outer wrapper is that much taller than the section itself). That
-    // window covers two phases: first reveal the section's own content if
-    // it's taller than the viewport (translating contentRef upward, same
-    // technique as useScrollPin), then spend the remaining distance
-    // scrubbing through the carousel slides.
+    // The sticky section stays pinned for exactly the spacer's height of
+    // scroll (see the spacer div in the JSX below), and that whole window
+    // drives the carousel scrub.
     const applyProgress = () => {
       const wrapperEl = wrapperRef.current;
-      const contentEl = contentRef.current;
       if (!wrapperEl) return;
-
-      const extraScroll = extraScrollRef.current;
-      const overflow = overflowRef.current;
+      const extraScroll = (EXTRA_SCROLL_VH / 100) * window.innerHeight;
       const wrapperDocTop = getDocumentTop(wrapperEl);
       const scrolledPx = Math.min(
         Math.max(0, window.scrollY - wrapperDocTop),
-        extraScroll
+        extraScroll,
       );
-
-      if (contentEl) {
-        const revealProgress =
-          overflow > 0 ? Math.min(1, scrolledPx / overflow) : 1;
-        contentEl.style.transform =
-          overflow > 0 && revealProgress > 0
-            ? `translateY(${-revealProgress * overflow}px)`
-            : "";
-      }
-
-      const remainingPx = Math.max(0, scrolledPx - overflow);
-      const remainingTotal = Math.max(1, extraScroll - overflow);
-      setCarouselProgress(Math.min(1, remainingPx / remainingTotal));
+      setCarouselProgress(extraScroll > 0 ? scrolledPx / extraScroll : 0);
     };
 
     applyProgress();
@@ -127,13 +107,9 @@ function Portfolio() {
 
   return (
     <Fragment>
-      <div
-        id="portfolio"
-        ref={wrapperRef}
-        style={{ height: wrapperHeight || undefined }}
-      >
-        <section ref={portfolioRef} className={style.portfolio}>
-          <div ref={contentRef}>
+      <USALProvider>
+        <div id="portfolio" ref={wrapperRef}>
+          <section className={style.portfolio}>
             <Subheader
               data={{
                 title: "PORTFOLIO",
@@ -141,46 +117,49 @@ function Portfolio() {
                 backgroundColor: "#ffffff",
               }}
             />
-            <h2 className={style.heading}>Deewan Institute</h2>
-            <p className={style.description}>
+            <h2 data-usal="fade-l delay-200" className={style.heading}>Deewan Institute</h2>
+            <p data-usal="fade-l delay-400" className={style.description}>
               Explore our recent projects and see how we've helped organizations
               transform their digital presence. Each case study highlights our
               approach to solving real-world challenges through thoughtful
               design and robust technology.
             </p>
-            <div className={style.showcase}>
-              <div className={style.carouselViewport} ref={viewportRef}>
-                <div
-                  className={style.track}
-                  style={{ transform: `translateX(-${trackOffset}px)` }}
-                >
-                  {slides.map((slide, i) => (
-                    <div
-                      className={style.slide}
-                      style={{ width: viewportWidth || "100%" }}
-                      key={i}
-                    >
-                      {slide.image ? (
-                        <img src={slide.image} alt={slide.alt} />
-                      ) : (
-                        <div className={style.placeholder}>{slide.alt}</div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className={style.dots}>
-                {slides.map((_, i) => (
-                  <span
+            <div className={style.carouselViewport} ref={viewportRef}>
+              <div
+                className={style.track}
+                style={{ transform: `translateX(-${trackOffset}px)` }}
+              >
+                {slides.map((slide, i) => (
+                  <div
+                    className={style.slide}
+                    style={{ width: viewportWidth || "100%" }}
                     key={i}
-                    className={i === activeIndex ? style.dotActive : style.dot}
-                  ></span>
+                  >
+                    <div className={style.slideText}>
+                      <h3 className={style.slideTitle}>{slide.title}</h3>
+                      <p className={style.slideDescription}>
+                        {slide.description}
+                      </p>
+                    </div>
+                    <div className={style.slideImage}>
+                      <img src={slide.image} alt={slide.alt} />
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
-          </div>
-        </section>
-      </div>
+            <div className={style.dots}>
+              {slides.map((_, i) => (
+                <span
+                  key={i}
+                  className={i === activeIndex ? style.dotActive : style.dot}
+                ></span>
+              ))}
+            </div>
+          </section>
+          <div style={{ height: `${EXTRA_SCROLL_VH}vh` }}></div>
+        </div>
+      </USALProvider>
     </Fragment>
   );
 }

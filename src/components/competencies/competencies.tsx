@@ -1,8 +1,8 @@
 import { Fragment } from "react/jsx-runtime";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import style from "./competencies.module.scss";
 import Subheader from "../subheader/subheader";
-import { useScrollPin } from "../../hooks/useScrollPin";
+import { USALProvider } from "@usal/react";
 
 const competencies = [
   {
@@ -37,15 +37,43 @@ const competencies = [
   },
 ];
 
+const PAGE_COUNT = 3;
+const PAGE_SIZE = Math.ceil(competencies.length / PAGE_COUNT);
+
 function Competencies() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  useScrollPin(sectionRef, contentRef);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [page, setPage] = useState(0);
+  const [translateX, setTranslateX] = useState(0);
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    if (!viewport || !track) return;
+
+    const applyTranslate = (p: number) => {
+      const cardIndex = Math.min(p * PAGE_SIZE, competencies.length - 1);
+      const card = track.children[cardIndex] as HTMLElement | undefined;
+      if (!card) return;
+      const maxScroll = Math.max(track.scrollWidth - viewport.clientWidth, 0);
+      setTranslateX(Math.min(card.offsetLeft, maxScroll));
+    };
+
+    applyTranslate(page);
+
+    const handleResize = () => applyTranslate(page);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [page]);
+
+  const goTo = (p: number) => {
+    setPage(Math.max(0, Math.min(p, PAGE_COUNT - 1)));
+  };
 
   return (
     <Fragment>
-      <section id="services" ref={sectionRef} className={style.competencies}>
-        <div ref={contentRef}>
+      <USALProvider>
+        <section id="services" className={style.competencies}>
           <Subheader
             data={{
               title: "Our Services",
@@ -53,18 +81,22 @@ function Competencies() {
               backgroundColor: "#0a5c61",
             }}
           />
-          <h2 className={style.heading}>Our Core Competencies</h2>
-          <p className={style.description}>
+          <h2 data-usal="fade-u delay-100 backwards" className={style.heading}>Our Core Competencies</h2>
+          <p data-usal="fade-u delay-200" className={style.description}>
             We provide end-to-end digital solutions tailored to your
             organization's needs. From strategy and design to development,
             deployment, and ongoing support, we help businesses leverage
             technology to improve efficiency, enhance user experiences, and
             achieve lasting growth.
           </p>
-          <div className="row">
-            {competencies.map((item) => (
-              <div className="col-lg-4 col-md-6" key={item.title}>
-                <div className={style.card}>
+          <div className={style.viewport} ref={viewportRef}>
+            <div
+              className={style.cardsTrack}
+              ref={trackRef}
+              style={{ transform: `translateX(-${translateX}px)` }}
+            >
+              {competencies.map((item) => (
+                <div data-usal="fade-u delay-300" className={style.card} key={item.title}>
                   <div className={style.iconWrapper}>
                     <img src={item.icon} alt={item.title} />
                   </div>
@@ -79,11 +111,40 @@ function Competencies() {
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+          <div className={style.controls}>
+            <button
+              type="button"
+              className={style.arrow}
+              onClick={() => goTo(page - 1)}
+              disabled={page === 0}
+              aria-label="Previous"
+            >
+              ‹
+            </button>
+            <div className={style.dots}>
+              {Array.from({ length: PAGE_COUNT }).map((_, p) => (
+                <span
+                  key={p}
+                  className={p === page ? style.dotActive : style.dot}
+                  onClick={() => goTo(p)}
+                ></span>
+              ))}
+            </div>
+            <button
+              type="button"
+              className={style.arrow}
+              onClick={() => goTo(page + 1)}
+              disabled={page === PAGE_COUNT - 1}
+              aria-label="Next"
+            >
+              ›
+            </button>
+          </div>
+        </section>
+      </USALProvider>
     </Fragment>
   );
 }

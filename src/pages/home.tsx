@@ -1,7 +1,6 @@
 import About from "../components/about/about";
 import Competencies from "../components/competencies/competencies";
 import Contact from "../components/contact/contact";
-import DebugHud from "../components/debughud/debughud";
 import Footer from "../components/footer/footer";
 import Hero from "../components/hero/hero";
 import Navbar from "../components/navbar/navbar";
@@ -19,7 +18,6 @@ function Home() {
       <Portfolio />
       <Contact />
       <Footer />
-      <DebugHud />
     </>
   );
 }

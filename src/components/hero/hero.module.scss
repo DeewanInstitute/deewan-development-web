@@ -6,6 +6,10 @@
   top: 0;
   z-index: 1;
   overflow: hidden;
+  // Cast upward from this section's own top edge, so as the next section
+  // slides up to cover it, the shadow reads as one physical layer stacked
+  // above another rather than plain scrolling.
+  box-shadow: 0 -25px 50px -15px rgba(0, 0, 0, 0.35);
   background-image: url("/assets/images/others/network.webp");
   background-repeat: no-repeat;
   background-size: 45%;
@@ -15,7 +19,7 @@
   height: 800px;
   border-radius: 40px;
   display: flex;
-
+  margin-bottom: 5%; 
 
   #title{ 
     width: 24%;

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@usal/react": "^2.0.0",
     "bootstrap": "^5.3.8",
     "gsap": "^3.15.0",
     "react": "^19.2.7",

@@ -41,9 +41,12 @@ function Navbar() {
           </li>
         </ul>
         <div className="col-md-3 text-end">
-          <button type="button" className="btn btn-primary" id={style.button}>
+          <a href="#contact">
+             <button type="button" className="btn btn-primary" id={style.button}>
             Get Started
           </button>
+          </a>
+         
         </div>
       </header>
     </Fragment>
