@@ -43,33 +43,41 @@ function Hero() {
                   className="btn btn-lg px-4 me-md-2 fw-bold"
                   id={style.started}
                 >
-                  Get Started
-                  <svg
-                    style={{ marginInline: "10px" }}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                  >
-                    <path
-                      d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z"
-                      fill="white"
-                    />
-                  </svg>
+                  <a className="w-100 text-decoration-none" href="#contact">
+                    Get Started
+                    <svg
+                      style={{ marginInline: "10px" }}
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <path
+                        d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z"
+                        fill="white"
+                      />
+                    </svg>{" "}
+                  </a>
                 </button>
+
                 <button
                   data-usal="fade-l delay-400"
                   type="button"
                   className="btn btn-lg px-4"
                   id={style.stack}
                 >
-                  View Our Tech Stack
+                  {" "}
+                  <a className="text-decoration-none " href="#services">View Our Tech Stack </a>
                 </button>
               </div>
             </div>
             <div className="col-12 col-lg-4" data-usal="fade-r delay-400">
-              <img src="/assets/images/others/image 14.png" alt="" className={style.heroImage} />
+              <img
+                src="/assets/images/team/hero.webp"
+                alt=""
+                className={style.heroImage}
+              />
             </div>
           </div>
         </div>

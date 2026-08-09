@@ -6,6 +6,8 @@
   top: 0;
   z-index: 3;
   overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
   box-shadow: 0 -25px 50px -15px rgba(0, 0, 0, 0.35);
   background-image: url("../../assets/images/others/team1.webp");
   background-size: contain;
@@ -36,8 +38,8 @@
   }
 
   .card {
-    flex: 0 0 355px;
-    width: 350px;
+    flex: 0 0 min(380px, calc((100% - 40px) / 2));
+    width: min(380px, calc((100% - 40px) / 2));
     border-radius: 12px;
     overflow: hidden;
 

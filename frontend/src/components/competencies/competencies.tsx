@@ -37,14 +37,19 @@ const competencies = [
   },
 ];
 
-const PAGE_COUNT = 3;
-const PAGE_SIZE = Math.ceil(competencies.length / PAGE_COUNT);
+const MOBILE_BREAKPOINT = 768;
+const getPageSize = () =>
+  typeof window !== "undefined" && window.innerWidth <= MOBILE_BREAKPOINT
+    ? 1
+    : 2;
 
 function Competencies() {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(0);
   const [translateX, setTranslateX] = useState(0);
+  const [pageSize, setPageSize] = useState(getPageSize);
+  const pageCount = Math.ceil(competencies.length / pageSize);
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -52,7 +57,7 @@ function Competencies() {
     if (!viewport || !track) return;
 
     const applyTranslate = (p: number) => {
-      const cardIndex = Math.min(p * PAGE_SIZE, competencies.length - 1);
+      const cardIndex = Math.min(p * pageSize, competencies.length - 1);
       const card = track.children[cardIndex] as HTMLElement | undefined;
       if (!card) return;
       const maxScroll = Math.max(track.scrollWidth - viewport.clientWidth, 0);
@@ -61,13 +66,21 @@ function Competencies() {
 
     applyTranslate(page);
 
-    const handleResize = () => applyTranslate(page);
+    const handleResize = () => {
+      const nextPageSize = getPageSize();
+      setPageSize((prev) => (prev === nextPageSize ? prev : nextPageSize));
+      applyTranslate(page);
+    };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [page]);
+  }, [page, pageSize]);
+
+  useEffect(() => {
+    setPage((p) => Math.max(0, Math.min(p, pageCount - 1)));
+  }, [pageCount]);
 
   const goTo = (p: number) => {
-    setPage(Math.max(0, Math.min(p, PAGE_COUNT - 1)));
+    setPage(Math.max(0, Math.min(p, pageCount - 1)));
   };
 
   return (
@@ -125,7 +138,7 @@ function Competencies() {
               ‹
             </button>
             <div className={style.dots}>
-              {Array.from({ length: PAGE_COUNT }).map((_, p) => (
+              {Array.from({ length: pageCount }).map((_, p) => (
                 <span
                   key={p}
                   className={p === page ? style.dotActive : style.dot}
@@ -137,7 +150,7 @@ function Competencies() {
               type="button"
               className={style.arrow}
               onClick={() => goTo(page + 1)}
-              disabled={page === PAGE_COUNT - 1}
+              disabled={page === pageCount - 1}
               aria-label="Next"
             >
               ›

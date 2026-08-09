@@ -6,8 +6,10 @@
   z-index: 10;
   background-color: $primary-color;
   padding-inline: 5%;
+  justify-content: space-between;
   .logo {
-    width: 40%;
+    width: 150px;
+    align-items: center;
   }
   #copyright {
     font-family: "JetBrainsMono_SemiBold";
@@ -16,6 +18,14 @@
   .icon {
     width: 25px;
     height: 25px;
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center !important;
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   @media (min-width: 1600px) {

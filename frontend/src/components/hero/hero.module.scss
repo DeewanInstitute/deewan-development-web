@@ -19,9 +19,9 @@
   height: 800px;
   border-radius: 40px;
   display: flex;
-  margin-bottom: 5%; 
+  margin-bottom: 5%;
 
-  #title{ 
+  #title {
     width: 24%;
     display: flex;
     flex-direction: row;
@@ -51,37 +51,50 @@
 
   #started {
     background-color: $primary-color-dark;
-    color: $white;
+
     letter-spacing: 1%;
     font-family: "JetBrainsMono_Light";
     padding: 18px 50px;
     gap: 0.5rem;
 
+    a {
+      color: $white;
+    }
+
     &:hover,
     &:active {
       background-color: $white;
-      color: $primary-color-dark;
+
       border: 2px solid $primary-color;
+      a {
+        color: $primary-color-dark;
+      }
     }
   }
 
   #stack {
     background-color: $white;
-    color: $black;
+
     font-family: "JetBrainsMono_Light";
     padding: 18px 50px;
     gap: 0.5rem;
 
+    a {
+      color: $black;
+    }
     &:hover,
     &:active {
       background-color: $black;
-      color: $white;
+
       border: 2px solid $white;
+      a {
+        color: $white;
+      }
     }
   }
 
   .heroImage {
-    max-width: 100%;
+    width: 130%;
     height: auto;
   }
 
@@ -116,8 +129,7 @@
     }
 
     .heroImage {
-      max-width: 75%;
+      display: none;
     }
   }
-
 }

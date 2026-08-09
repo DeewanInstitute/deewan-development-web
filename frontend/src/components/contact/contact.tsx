@@ -147,9 +147,12 @@ function Contact() {
                       <option value="" disabled>
                         Choose...
                       </option>
-                      <option value="One">One</option>
-                      <option value="Two">Two</option>
-                      <option value="Three">Three</option>
+                      <option value="Web Design">Web Design</option>
+                      <option value="Mobile App Design">Mobile App Design</option>
+                      <option value="Web Development">Web Development</option>
+                      <option value="Mobile App Development">Mobile App Development</option>
+                      <option value="Social Media Management">Social Media Management</option>
+                      <option value="Digital Advertising">Digital Advertising</option>
                     </select>
                   </div>
                   <div className="col-12 pt-2">

@@ -1,0 +1,100 @@
+@use "../../style/font.scss" as *;
+@use "../../style/variables.scss" as *;
+
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 70vh;
+  padding-block: 8%;
+  padding-inline: 8%;
+  box-sizing: border-box;
+
+  .code {
+    font-family: "JetBrainsMono_SemiBold";
+    color: $primary-color;
+    font-size: 180px;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .heading {
+    font-family: "JetBrainsMono_Regular";
+    color: $primary-color-dark;
+    font-size: 40px;
+    margin-block: 2% 3%;
+  }
+
+  .description {
+    font-family: "Inter-Regular";
+    color: $text-dark;
+    font-size: 18px;
+    max-width: 480px;
+    margin-inline: auto;
+    margin-bottom: 6%;
+  }
+
+  .home {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: $primary-color;
+    color: $white;
+    font-family: "JetBrainsMono_Light";
+    font-size: 16px;
+    text-decoration: none;
+    padding: 16px 40px;
+    border-radius: 8px;
+    border: 2px solid $primary-color;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover,
+    &:active {
+      background-color: $white;
+      color: $primary-color;
+    }
+
+    svg path {
+      transition: fill 0.2s ease;
+    }
+
+    &:hover svg path,
+    &:active svg path {
+      fill: $primary-color;
+    }
+  }
+
+  @media (max-width: 768px) {
+    min-height: 60vh;
+    padding-block: 14% 12%;
+
+    .code {
+      font-size: 96px;
+    }
+
+    .heading {
+      font-size: 26px;
+    }
+
+    .description {
+      font-size: 15px;
+    }
+
+    .home {
+      padding: 14px 30px;
+      font-size: 14px;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .code {
+      font-size: 72px;
+    }
+  }
+}

@@ -4,7 +4,7 @@ import style from "./footer.module.scss";
 function Footer() {
   return (
     <footer
-      className="d-flex flex-wrap justify-content-between align-items-center py-3 border-top"
+      className="d-flex flex-wrap align-items-center py-3 border-top"
       id={style.footer}
     >
       <div className="col-md-4 d-flex align-items-center">
@@ -26,7 +26,7 @@ function Footer() {
       </div>
       <ul className="nav col-sm-4 justify-content-center list-unstyled d-flex flex-row flex-nowrap">
         <li className="mx-1">
-          <a className="text-decoration-none" href="#" aria-label="Instagram">
+          <a className="text-decoration-none" target="_blank" href="https://www.instagram.com/deewan_for_digital_learning/" aria-label="Instagram">
             <img
               className={style.icon}
               src="/assets/images/icons/instagram.webp"
@@ -35,7 +35,7 @@ function Footer() {
           </a>
         </li>
         <li className="mx-1">
-          <a className="text-decoration-none" href="#" aria-label="LinkedIn">
+          <a className="text-decoration-none" target="_blank"  href="https://www.linkedin.com/company/deewan-for-digital-learning-development/" aria-label="LinkedIn">
             <img
               className={style.icon}
               src="/assets/images/icons/linkedin.webp"
@@ -44,7 +44,7 @@ function Footer() {
           </a>
         </li>
         <li className="mx-1">
-          <a className="text-decoration-none" href="#" aria-label="Facebook">
+          <a className="text-decoration-none" target="_blank" href="https://www.facebook.com/people/Deewan-for-Digital-Learning-Developmen/61589663083228/" aria-label="Facebook">
             <img
               className={style.icon}
               src="/assets/images/icons/facebook.webp"
