@@ -53,8 +53,7 @@ function Contact() {
   return (
     <Fragment>
       <USALProvider>
-        <section id="contact">
-          <div className="mx-auto py-5" id={style.contact}>
+        <section className="mx-auto py-5" id={style.contact}>
             <div className="row align-items-center">
               <div className="col-12 col-lg-4">
                 <Subheader
@@ -192,7 +191,6 @@ function Contact() {
                 </form>
               </div>
             </div>
-          </div>
         </section>
       </USALProvider>
     </Fragment>

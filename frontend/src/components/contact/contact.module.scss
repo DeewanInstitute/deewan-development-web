@@ -2,11 +2,10 @@
 @use "../../style/variables.scss" as *;
 
 #contact {
-  position: sticky;
-  top: 0;
-  z-index: 6;
-  overflow: hidden;
-  box-shadow: 0 -25px 50px -15px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+  min-height: 100%;
+  display: grid;
+  align-items: center;
   background-color: $white;
   padding-inline: 8%;
 

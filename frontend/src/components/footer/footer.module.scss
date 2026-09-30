@@ -2,8 +2,8 @@
 @use "../../style/variables.scss" as *;
 
 #footer {
-  position: relative;
-  z-index: 10;
+  box-sizing: border-box;
+  min-height: 100%;
   background-color: $primary-color;
   padding-inline: 5%;
   justify-content: space-between;

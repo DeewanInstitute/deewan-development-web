@@ -1,42 +1,38 @@
 @font-face {
-  font-family: "JetBrainsMono_Regular";
-  src: url("../assets/fonts/JetBrainsMono-Regular.ttf");
+    font-family: "Inter_Regular";
+    src: url("/assets/fonts/Inter-Regular.ttf") format("truetype");
 }
 @font-face {
-  font-family: "JetBrainsMono_Bold";
-  src: url("../assets/fonts/JetBrainsMono-Bold.ttf");
+    font-family: "Inter_Medium";
+    src: url("/assets/fonts/Inter-Medium.ttf") format("truetype");
 }
 @font-face {
-  font-family: "JetBrainsMono_ExtraBold";
-  src: url("../assets/fonts/JetBrainsMono-ExtraBold.ttf");
-}
-@font-face {
-  font-family: "JetBrainsMono_ExtraLight";
-  src: url("../assets/fonts/JetBrainsMono-ExtraLight.ttf");
-}
-@font-face {
-  font-family: "JetBrainsMono_Italic";
-  src: url("../assets/fonts/JetBrainsMono-Italic.ttf");
-}
-@font-face {
-  font-family: "JetBrainsMono_Light";
-  src: url("../assets/fonts/JetBrainsMono-Light.ttf");
-}
-@font-face {
-  font-family: "JetBrainsMono_Medium";
-  src: url("../assets/fonts/JetBrainsMono-Medium.ttf");
+    font-family: "Merriweather-Black";
+    src: url("/assets/fonts/Merriweather-Black.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "JetBrainsMono_SemiBold";
-  src: url("../assets/fonts/JetBrainsMono-SemiBold.ttf");
-}
-@font-face {
-  font-family: "JetBrainsMono_Thin";
-  src: url("../assets/fonts/JetBrainsMono-Thin.ttf");
+    font-family: "Merriweather-Regular";
+    src: url("/assets/fonts/Merriweather-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Inter-Regular";
-  src: url("../assets/fonts/Inter-Regular.ttf");
+    font-family: "Merriweather-Light";
+    src: url("/assets/fonts/Merriweather-Light.ttf") format("truetype");
 }
+
+@font-face {
+    font-family: "Merriweather-Bold";
+    src: url("/assets/fonts/Merriweather-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Merriweather-SemiBold";
+    src: url("/assets/fonts/Merriweather-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Merriweather-Medium";
+    src: url("/assets/fonts/Merriweather-Medium.ttf") format("truetype");
+}
+
