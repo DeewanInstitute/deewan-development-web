@@ -1,0 +1,48 @@
+// Scroll reveals are driven by GSAP (see hooks/useScrollReveal.ts); this file only holds
+// the CSS-side helpers and keyframes.
+@use './variables' as *;
+@use './mixins' as *;
+
+@keyframes dw-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes dw-spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dw-float {
+  animation: dw-float 5s ease-in-out infinite;
+}
+
+// Masked word used by <SplitWords>: the inner span slides up from below its mask
+.dw-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+
+  > span {
+    display: inline-block;
+    will-change: transform;
+  }
+}
+
+@include reduced-motion {
+  .dw-float {
+    animation: none;
+  }
+}
+
+.dw-word.is-highlight {
+  color: $amber;
+}

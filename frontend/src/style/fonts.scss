@@ -1,0 +1,49 @@
+// One family per typeface, weights mapped to the files in /public/assets/fonts.
+
+$merriweather: (
+  300: 'Light',
+  400: 'Regular',
+  500: 'Medium',
+  600: 'SemiBold',
+  700: 'Bold',
+  800: 'ExtraBold',
+  900: 'Black',
+);
+
+@each $weight, $name in $merriweather {
+  @font-face {
+    font-family: 'Merriweather';
+    font-weight: $weight;
+    src: url('/assets/fonts/Merriweather-#{$name}.ttf') format('truetype');
+    font-display: swap;
+  }
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-weight: 400;
+  src: url('/assets/fonts/Inter-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-weight: 500;
+  src: url('/assets/fonts/Inter-Medium.ttf') format('truetype');
+  font-display: swap;
+}
+
+$kalam: (
+  300: 'Light',
+  400: 'Regular',
+  700: 'Bold',
+);
+
+@each $weight, $name in $kalam {
+  @font-face {
+    font-family: 'Kalam';
+    font-weight: $weight;
+    src: url('/assets/fonts/Kalam-#{$name}.ttf') format('truetype');
+    font-display: swap;
+  }
+}

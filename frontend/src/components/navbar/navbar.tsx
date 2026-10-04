@@ -1,91 +1,146 @@
-import { Fragment } from "react/jsx-runtime";
-import { useEffect, useState } from "react";
-import "bootstrap";
-import style from "./navbar.module.scss";
+import { useEffect, useRef, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import Button from '../button/button'
+import Scribble from '../scribble/scribble'
+import { drawScribble, eraseScribble } from '../../lib/scribble'
+import { gsap } from '../../lib/gsap'
+import './navbar.scss'
 
 const navItems = [
-  { href: "#about", label: "About" },
-  { href: "#portfolio", label: "Portfolio" },
-  { href: "#services", label: "Services" },
-  { href: "#contact", label: "Contact" },
-];
+  { to: '/', label: 'Home' },
+  { to: '/about', label: 'About Us' },
+  { to: '/portfolio', label: 'Our Portfolio' },
+  { to: '/offer', label: 'What We Offer' },
+  { to: '/contact', label: 'Contact Us' },
+]
 
 function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { pathname } = useLocation()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  // every link carries its own scribble, so it can never drift away from the text
+  const scribbleRefs = useRef<(SVGSVGElement | null)[]>([])
+
+  const activeIndex = navItems.findIndex(({ to }) =>
+    to === '/' ? pathname === '/' : pathname.startsWith(to),
+  )
+
+  // Selected link: the old circle is scratched out, then a new one is sketched around the new link.
+  // data-drawn remembers which scribbles are on screen, which also keeps StrictMode's double run harmless.
+  useEffect(() => {
+    const speed = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1
+
+    scribbleRefs.current.forEach((svg, index) => {
+      if (!svg) return
+      const isDrawn = svg.dataset.drawn === 'true'
+
+      if (index !== activeIndex && isDrawn) {
+        svg.dataset.drawn = 'false'
+        eraseScribble(svg, 0.28 * speed)
+      }
+
+      if (index === activeIndex && !isDrawn) {
+        svg.dataset.drawn = 'true'
+        gsap
+          .timeline({ delay: 0.15 * speed })
+          .set(svg, { rotation: gsap.utils.random(-5, 5) })
+          .add(drawScribble(svg, { duration: 0.8 * speed }))
+          .to(svg, { rotation: 0, duration: 1.1 * speed, ease: 'elastic.out(1, 0.5)' }, '<')
+      }
+    })
+  }, [activeIndex])
+
+  // Sticky bar tightens up once the page is scrolled
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    document.body.style.overflow = isMenuOpen ? 'hidden' : ''
     return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMenuOpen]);
+      document.body.style.overflow = ''
+    }
+  }, [isMenuOpen])
 
-  const closeMenu = () => setIsMenuOpen(false);
+  const closeMenu = () => setIsMenuOpen(false)
 
   return (
-    <Fragment>
-      <header
-        className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
-        id={style.navbar}
-      >
-        <div className="col-md-3 mb-2 mb-md-0">
-          <a
-            href="/"
-            className="d-inline-flex link-body-emphasis text-decoration-none"
-            id={style.logo}
+    <>
+      <header className={`dw-header${isScrolled ? ' is-scrolled' : ''}`}>
+        <div className="dw-header-bar dw-container">
+          <Link to="/" className="dw-header-logo" onClick={closeMenu}>
+            <img src="/assets/images/logos/logo.png" alt="Deewan for Digital Learning Development" />
+          </Link>
+
+          <nav className="dw-header-nav" aria-label="Main">
+            <ul className="dw-header-list">
+              {navItems.map(({ to, label }, index) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className={`dw-header-link${index === activeIndex ? ' is-active' : ''}`}
+                    aria-current={index === activeIndex ? 'page' : undefined}
+                  >
+                    {/* Both faces share one grid cell so switching font never shifts the layout */}
+                    <span className="dw-header-face">{label}</span>
+                    <span className="dw-header-face dw-header-face-hand" aria-hidden="true">
+                      {label}
+                    </span>
+                    <Scribble
+                      ref={(el) => {
+                        scribbleRefs.current[index] = el
+                      }}
+                      className="dw-header-scribble"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <Button to="/contact" variant="soft" className="dw-header-cta">
+            Get Started
+          </Button>
+
+          <button
+            type="button"
+            className={`dw-header-toggle${isMenuOpen ? ' is-open' : ''}`}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((open) => !open)}
           >
-            <img src="/assets/images/logos/logo.png" />
-          </a>
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
-        <ul
-          className={`nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 ${style.navList}`}
-        >
-          {navItems.map((item) => (
-            <li className="px-2" id={style.navLink} key={item.href}>
-              <a href={item.href} className="nav-link px-2 link-secondary">
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <div className={`col-md-3 text-end ${style.ctaDesktop}`}>
-          <a href="#contact">
-            <button type="button" className="btn btn-primary" id={style.button}>
-              Get Started
-            </button>
-          </a>
-        </div>
-        <button
-          type="button"
-          className={`${style.menuToggle} ${isMenuOpen ? style.menuToggleOpen : ""}`}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMenuOpen}
-          onClick={() => setIsMenuOpen((v) => !v)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
       </header>
 
-      <div className={`${style.overlay} ${isMenuOpen ? style.overlayOpen : ""}`}>
-        <ul className={style.overlayNav}>
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <a href={item.href} onClick={closeMenu}>
-                {item.label}
-              </a>
+      <div className={`dw-overlay${isMenuOpen ? ' is-open' : ''}`} aria-hidden={!isMenuOpen}>
+        <ul className="dw-overlay-list">
+          {navItems.map(({ to, label }, index) => (
+            <li key={to}>
+              <Link
+                to={to}
+                className={index === activeIndex ? 'is-active' : undefined}
+                onClick={closeMenu}
+                tabIndex={isMenuOpen ? 0 : -1}
+              >
+                {label}
+              </Link>
             </li>
           ))}
         </ul>
-        <a href="#contact" onClick={closeMenu}>
-          <button type="button" className={style.overlayButton}>
-            Get Started
-          </button>
-        </a>
+        <Button to="/contact" variant="amber" onClick={closeMenu}>
+          Get Started
+        </Button>
       </div>
-    </Fragment>
-  );
+    </>
+  )
 }
 
-export default Navbar;
+export default Navbar

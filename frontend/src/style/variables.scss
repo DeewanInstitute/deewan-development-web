@@ -1,30 +1,48 @@
-// ─── Brand primaries ─────────────────────────────────────────────────────
-
+// Brand colours
 $primary-color: #0a5c61;
 $primary-color-dark: #094e52;
 $primary-color-light: #478589;
+$amber: #f2b833;
+$teal-soft: #78a5a8;
 
-$dark-blue: #094e52;
+// Tints of the primary colour
 $blue-light-one: #a9c6c8;
 $blue-light-two: #d3e2e3;
 $blue-light-three: #ebf2f2;
 
-// ─── Neutral palette ─────────────────────────────────────────────────────
-
-$cream: #faf7f2;
-$warm-white: #fff9f4;
-
-// Aliases of $primary-color for cleaner usage in new modules
-$blue: $primary-color;
-
-$text-dark: #074044;
-
+// Neutrals
 $white: #ffffff;
 $black: #000000;
-
-// ─── Accent palette ─────────────────────────────────────────────────────
-$coral: #e35447;
-$amber: #f2b833;
-$sage: #94b88f;
+$off-white: #f7f9fb;
+$cream: #faf7f2;
+$warm-white: #fff9f4;
+$ink: #45464d;
 $slate: #4d5761;
 $cloud: #f2f5f7;
+$dot-idle: #d9d9d9;
+
+// Accent palette
+$coral: #e35447;
+$sage: #94b88f;
+
+// Aliases
+$blue: $primary-color;
+$text-dark: #074044;
+
+// Typography
+$font-body: 'Merriweather', Georgia, serif;
+$font-sans: 'Inter', system-ui, sans-serif;
+$font-hand: 'Kalam', 'Comic Sans MS', cursive;
+
+// Layout
+$container-width: 1400px;
+$section-padding: 96px;
+$radius-card: 5px 100px;
+$radius-button: 10px 100px;
+$radius-soft-button: 7px 30px 10px;
+
+// Breakpoints
+$desktop-small: 1100px;
+$navbar-collapse: 992px;
+$tablet: 820px;
+$mobile: 560px;

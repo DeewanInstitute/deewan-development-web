@@ -1,0 +1,271 @@
+@use '../../style/variables' as *;
+@use '../../style/mixins' as *;
+
+// The header's box never changes size, so the page below it never shifts (that is what made it jiggle).
+// "Shrinking" is only visual: the backdrop scales down from the top and the contents scale and nudge up with it.
+$shrink: 0.84;
+
+.dw-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+
+  // the white backdrop lives on a pseudo-element so it can shrink without touching layout
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba($white, 0.94);
+    backdrop-filter: blur(10px);
+    transform-origin: top;
+    transition:
+      transform 0.35s ease,
+      box-shadow 0.4s ease;
+  }
+
+  &.is-scrolled {
+    &::before {
+      transform: scaleY($shrink);
+      box-shadow: 0 6px 24px rgba($primary-color, 0.12);
+    }
+
+    .dw-header-bar {
+      translate: 0 -#{(1 - $shrink) * 50%};
+    }
+
+    .dw-header-logo,
+    .dw-header-nav,
+    .dw-header-cta,
+    .dw-header-toggle {
+      scale: $shrink;
+    }
+  }
+
+  &-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    max-width: none;
+    padding-block: 29px;
+    padding-inline: 2%;
+    transition: translate 0.35s ease;
+
+    @include navbar-collapse {
+      padding-block: 16px;
+    }
+  }
+
+  // each part scales around the side it is anchored to, so nothing drifts away from the edges
+  &-logo,
+  &-nav,
+  &-cta,
+  &-toggle {
+    transition: scale 0.35s ease;
+  }
+
+  &-logo {
+    flex: none;
+    display: block;
+    width: 192px;
+    line-height: 0;
+    transform-origin: left center;
+
+    @include navbar-collapse {
+      width: 140px;
+    }
+  }
+
+  &-cta,
+  &-toggle {
+    transform-origin: right center;
+    transition:
+    border-radius 0.35s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  }
+
+  &-nav {
+    position: relative;
+
+    @include navbar-collapse {
+      display: none;
+    }
+  }
+
+  // lives inside its link and is sized from it, so it follows the text through resizes, font loads and scaling
+  &-scribble {
+    --scribble-width: 2.6;
+    position: absolute;
+    top: -10px;
+    left: -14px;
+    width: calc(100% + 28px);
+    height: calc(100% + 20px);
+    color: $primary-color;
+    pointer-events: none;
+
+    path {
+      stroke-dashoffset: 1.02; // hidden until drawn
+    }
+  }
+
+  &-list {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    @include desktop-small {
+      gap: 20px;
+    }
+  }
+
+  &-link {
+    position: relative;
+    display: grid;
+    color: $ink;
+    font-size: 18px;
+    line-height: 24px;
+    transition: color 0.2s ease;
+    @include focus-ring($primary-color);
+
+    &:hover {
+      color: $primary-color;
+    }
+
+    @include desktop-small {
+      font-size: 16px;
+    }
+  }
+
+  &-face {
+    grid-area: 1 / 1;
+    justify-self: center;
+    white-space: nowrap;
+    transition: opacity 0.25s ease 0.15s;
+
+    &-hand {
+      font-family: $font-hand;
+      font-weight: 700;
+      opacity: 0;
+    }
+  }
+
+  // The selected link swaps to the hand-written face while its scribble is drawn
+  &-link.is-active {
+    color: $ink;
+
+    .dw-header-face {
+      opacity: 0;
+
+      &-hand {
+        opacity: 1;
+      }
+    }
+  }
+
+  &-cta {
+    flex: none;
+
+    @include navbar-collapse {
+      display: none;
+    }
+  }
+
+  &-toggle {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin-left: auto;
+    border: 0;
+    background: none;
+    z-index: 1001;
+    @include focus-ring($primary-color);
+
+    span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      border-radius: 2px;
+      background: $primary-color;
+      transition:
+        transform 0.3s ease,
+        opacity 0.3s ease,
+        background-color 0.3s ease;
+    }
+
+    @include navbar-collapse {
+      display: flex;
+    }
+
+    &.is-open {
+      span {
+        background: $white;
+      }
+
+      span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      span:nth-child(2) {
+        opacity: 0;
+      }
+
+      span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
+  }
+}
+
+.dw-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  background: $primary-color;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+
+    a {
+      color: $white;
+      font-size: 26px;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $amber;
+      }
+
+      &.is-active {
+        color: $amber;
+        font-family: $font-hand;
+        font-weight: 700;
+      }
+    }
+  }
+}

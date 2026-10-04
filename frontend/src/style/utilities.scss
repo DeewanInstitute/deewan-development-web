@@ -1,0 +1,32 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+// "dw-" prefix keeps our helpers clear of Bootstrap's .container etc.
+.dw-container {
+  @include container;
+}
+
+.dw-section {
+  padding-block: $section-padding;
+
+  @include tablet {
+    padding-block: 64px;
+  }
+}
+
+.dw-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.dw-hand {
+  font-family: $font-hand;
+  font-weight: 700;
+}

@@ -1,0 +1,70 @@
+@use '../../style/variables' as *;
+@use '../../style/mixins' as *;
+
+// Every button shares one hover: it lifts, throws a soft shadow, and its corners flip.
+.dw-button {
+  --button-radius: #{$radius-button};
+  --button-radius-hover: 100px 10px;
+  --button-shadow: #{rgba($primary-color, 0.3)};
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  border-radius: var(--button-radius);
+  cursor: pointer;
+  transition:
+    border-radius 0.35s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  @include focus-ring($primary-color);
+
+  &:hover {
+    transform: translateY(-3px);
+    border-radius: var(--button-radius-hover);
+    box-shadow: 0 8px 18px var(--button-shadow);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  // The two "overlay + border" buttons from the design
+  &-amber,
+  &-teal {
+    height: 60px;
+    padding-inline: 37px;
+    font-family: $font-body;
+    @include eyebrow(2px);
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  &-amber {
+    --button-shadow: #{rgba($amber, 0.5)};
+    color: $primary-color;
+    background: $amber;
+    border-color: $primary-color;
+  }
+
+  &-teal {
+    color: $white;
+    background: $primary-color;
+    border-color: $amber;
+  }
+
+  // Header call-to-action
+  &-soft {
+    --button-radius: #{$radius-soft-button};
+    --button-radius-hover: 30px 7px 30px 10px;
+    --button-shadow: #{rgba($teal-soft, 0.6)};
+    height: 48px;
+    padding-inline: 48px;
+    color: $white;
+    background: $teal-soft;
+    font-family: $font-body;
+    font-weight: 700;
+    font-size: 16px;
+    white-space: nowrap;
+  }
+}

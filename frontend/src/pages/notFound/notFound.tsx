@@ -1,14 +1,13 @@
-import Footer from "../components/footer/footer";
-import Navbar from "../components/navbar/navbar";
-import NotFound from "../components/notFound/notFound";
+import { useEffect } from 'react'
+import NotFound from '../../components/notFound/notFound'
 
+// Rendered by the router for every route that does not exist
 function NotFoundPage() {
-  return (
-    <>
-      <Navbar />
-      <NotFound />
-      <Footer />
-    </>
-  );
+  useEffect(() => {
+    document.title = 'Page Not Found | Deewan Development'
+  }, [])
+
+  return <NotFound />
 }
-export default NotFoundPage;
+
+export default NotFoundPage

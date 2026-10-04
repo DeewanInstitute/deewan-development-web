@@ -1,0 +1,23 @@
+.dw-scribble {
+  overflow: visible;
+  max-width: none; // base.scss caps svg at 100%, which would clip the oversized circle
+  color: inherit;
+
+  path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--scribble-width, 3);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1 2;
+    stroke-dashoffset: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+
+    // second pass is thinner and lighter, like a quicker stroke
+    &:nth-child(2) {
+      stroke-width: calc(var(--scribble-width, 3) * 0.7);
+      stroke-opacity: 0.75;
+    }
+  }
+}

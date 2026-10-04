@@ -1,0 +1,69 @@
+@use 'sass:math';
+@use './variables' as *;
+
+@mixin container {
+  width: 100%;
+  max-width: $container-width;
+  margin-inline: auto;
+  padding-inline: 6%;
+}
+
+@mixin focus-ring($color: $amber) {
+  &:focus-visible {
+    outline: 3px solid $color;
+    outline-offset: 4px;
+  }
+}
+
+@mixin below($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin desktop-small {
+  @include below($desktop-small) {
+    @content;
+  }
+}
+
+@mixin navbar-collapse {
+  @include below($navbar-collapse) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @include below($tablet) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @include below($mobile) {
+    @content;
+  }
+}
+
+// Letter-spaced uppercase label used on buttons and small captions
+@mixin eyebrow($spacing: 2px) {
+  font-weight: 800;
+  letter-spacing: $spacing;
+  text-transform: uppercase;
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Shows only the drawn part of an image that was exported with a big transparent margin.
+// $w/$h = full image size, $x/$y/$cw/$ch = the visible box inside it.
+@mixin cropped($src, $w, $h, $x, $y, $cw, $ch) {
+  aspect-ratio: math.div($cw, $ch);
+  background: url($src) no-repeat;
+  background-size: math.percentage(math.div($w, $cw)) math.percentage(math.div($h, $ch));
+  background-position: math.percentage(math.div($x, $w - $cw)) math.percentage(math.div($y, $h - $ch));
+}
+// don't even ask why this is so complicated, it's just how CSS works. xDDDDD
