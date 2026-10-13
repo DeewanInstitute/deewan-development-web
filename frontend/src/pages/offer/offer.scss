@@ -11,28 +11,34 @@ $art: '/assets/images/offer';
 
 .offer-shape {
   position: absolute;
+  width: clamp(90px, 13vw, 210px);
+  aspect-ratio: 627 / 975;
+  // overflow: hidden;
   pointer-events: none;
+
+  // the globe is a full circle twice as wide as the strip, so the page edge cuts it in half
+  &-globe {
+    position: absolute;
+    top: 0;
+    width: 200%;
+    
+    aspect-ratio: 1;
+  }
 
   &-left {
     left: 0;
-    width: clamp(90px, 13vw, 210px);
-    aspect-ratio: 627 / 975;
+  }
 
-    // the artwork is mirrored so its flat cut sits against the page edge
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      transform: scaleX(-1);
-      @include cropped('#{$art}/left.webp', 848, 1404, 221, 216, 627, 975);
-    }
+  &-left &-globe {
+    right: -30%;
   }
 
   &-right {
     right: 0;
-    width: clamp(110px, 16vw, 260px);
-    @include cropped('#{$art}/full.webp', 1404, 1404, 0, 216, 860, 975);
-    animation-delay: -2.5s;
+  }
+
+  &-right &-globe {
+    left: -30%;
   }
 }
 
@@ -45,6 +51,7 @@ $art: '/assets/images/offer';
   &-shape {
     &.offer-shape-left {
       top: 130px;
+      
     }
 
     &.offer-shape-right {

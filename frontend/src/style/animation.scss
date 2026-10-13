@@ -13,6 +13,19 @@
   }
 }
 
+// a hand-drawn arrow bobbing toward where it points; set --nudge-x / --nudge-y on it.
+// Uses `translate`, not `transform`, so a mirror or rotation on the arrow stays put.
+@keyframes dw-arrow-nudge {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: var(--nudge-x, 5px) var(--nudge-y, 5px);
+  }
+}
+
 @keyframes dw-spin-slow {
   to {
     transform: rotate(360deg);

@@ -1,0 +1,337 @@
+@use '../../style/variables' as *;
+@use '../../style/mixins' as *;
+
+$card-width: 520px;
+
+.cs {
+  --gap: clamp(70px, 9vw, 130px);
+
+  padding-block: 90px 110px;
+  // faint yellow network drawn for the whole section; cover keeps it filling any height
+  background: url('/assets/images/portfolio/yellow_background.webp') center top / cover no-repeat;
+
+  &-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    h2 {
+      margin: 18px 0 0;
+      color: $primary-color;
+      font-size: clamp(34px, 4.7vw, 60px);
+      line-height: 1.33;
+    }
+  }
+
+  &-name {
+    margin: 4px 0 0;
+    color: $primary-color-light;
+    font-family: $font-hand;
+    font-weight: 700;
+    font-size: clamp(18px, 2vw, 24px);
+  }
+}
+
+// ─── Duration / Service / Industry ───────────────────────────────────────
+
+.cs-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 56px 0 0;
+  padding: 34px clamp(20px, 6vw, 80px);
+  border-radius: 60px 10px;
+  background: $primary-color;
+  text-align: center;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  dt {
+    color: $amber;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 0;
+    color: $white;
+    font-size: clamp(14px, 1.5vw, 18px);
+    line-height: 1.4;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    border-radius: 40px 10px;
+  }
+}
+
+// ─── What / Challenge / Solution ─────────────────────────────────────────
+
+.cs-steps {
+  margin-top: calc(var(--gap) * 0.7);
+}
+
+// a card on one side, its arrow in the free space on the other
+.cs-step {
+  display: grid;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: calc(var(--gap) * 0.55);
+
+  &-left {
+    grid-template-columns: minmax(0, $card-width) minmax(56px, 1fr);
+  }
+
+  &-right {
+    grid-template-columns: minmax(56px, 1fr) minmax(0, $card-width);
+
+    .cs-card {
+      order: 2;
+    }
+
+    .cs-arrow {
+      order: 1;
+      justify-self: end;
+    }
+  }
+}
+
+.cs-arrow {
+  width: clamp(60px, 11vw, 150px);
+  margin-bottom: calc(var(--gap) * -0.4);
+  justify-self: start;
+  pointer-events: none;
+
+  // --nudge-x/y: which way the arrow points, so the nudge follows the head
+  --nudge-x: 5px;
+  --nudge-y: 5px;
+
+  img {
+    width: 100%;
+    // hidden until drawn; the wipe runs in the image's own space, so a mirrored
+    // arrow still draws from its tail
+    clip-path: inset(0 100% 0 0);
+  }
+
+  &.is-drawn img {
+    animation:
+      cs-arrow-draw 0.9s ease-out 0.4s 1 normal forwards,
+      dw-arrow-nudge 2.4s ease-in-out 1.3s infinite normal none;
+  }
+
+  // mirrored arrows point down-left
+  &-flip {
+    --nudge-x: -5px;
+  }
+
+  &-flip img {
+    transform: scaleX(-1);
+  }
+}
+
+@keyframes cs-arrow-draw {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@include reduced-motion {
+  .cs-arrow img,
+  .cs-arrow.is-drawn img {
+    clip-path: none;
+    animation: none;
+  }
+}
+
+// double outline: amber line offset behind a teal one
+.cs-card {
+  position: relative;
+  z-index: 0;
+  padding: clamp(22px, 3vw, 36px) clamp(20px, 3vw, 40px);
+  border: 2px solid $primary-color;
+  border-radius: 10px 50px;
+  background: $white;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -11px 11px 11px -11px;
+    z-index: -1;
+    border: 2px solid $amber;
+    border-radius: 10px 50px;
+  }
+
+  h3 {
+    margin: 0 0 12px;
+    color: $primary-color;
+    font-family: $font-hand;
+    font-weight: 700;
+    font-size: clamp(30px, 3.4vw, 44px);
+    line-height: 1.15;
+  }
+
+  p {
+    margin: 0;
+    color: $primary-color;
+    font-size: clamp(13px, 1.3vw, 16px);
+    line-height: 1.7;
+  }
+}
+
+// ─── Video in the laptop ─────────────────────────────────────────────────
+
+.cs-laptop {
+  width: min(100%, 860px);
+  margin: var(--gap) auto 0;
+
+  &-lid {
+    padding: 2.2% 2.2% 2.6%;
+    border: 2px solid #2b2b2b;
+    border-radius: 18px 18px 6px 6px;
+    background: #111;
+  }
+
+  // same ratio as the walkthrough videos (1340 × 720), so they fill the screen exactly
+  &-screen {
+    aspect-ratio: 1340 / 720;
+    overflow: hidden;
+    border-radius: 6px;
+    background: $cream;
+
+    video,
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    video {
+      object-fit: contain;
+      background: #000;
+    }
+
+    // projects without a video show their logo on the screen
+    .cs-laptop-fallback {
+      object-fit: contain;
+      padding: 8%;
+    }
+  }
+
+  &-base {
+    position: relative;
+    width: 112%;
+    height: clamp(10px, 1.6vw, 18px);
+    margin-left: -6%;
+    border-radius: 0 0 24px 24px;
+    background: linear-gradient(#e4e6e8, #b9bcc0);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 16%;
+      height: 55%;
+      border-radius: 0 0 10px 10px;
+      background: #9a9da1;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+// link to the live website / store page, under the laptop
+.cs-link {
+  margin: 28px 0 0;
+  text-align: center;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: $primary-color;
+    font-family: $font-hand;
+    font-weight: 700;
+    font-size: clamp(20px, 2.2vw, 26px);
+    text-decoration: underline;
+    text-decoration-color: $amber;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+    transition: color 0.25s ease;
+    @include focus-ring;
+
+    &:hover {
+      color: $primary-color-light;
+    }
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.25s ease;
+  }
+
+  a:hover svg {
+    transform: translate(3px, -3px);
+  }
+}
+
+// ─── Technology stack ────────────────────────────────────────────────────
+
+.cs-stack-step {
+  margin: var(--gap) 0 0;
+}
+
+// the last arrow, beside the stack card: raise it (or lower it) with margin-bottom.
+// Turn it on the image, not the wrapper: the reveal tween owns the wrapper's transform.
+.cs-stack-arrow {
+  align-self: center;
+  width: 260px;
+  margin-bottom: 36px;
+  @media (max-width: 900px) {
+    width: 100px;
+    margin-bottom: 260px;
+  }
+  img {
+    transform: rotate(-95deg) scaleX(-1);
+  }
+}
+
+.cs-stack {
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px clamp(18px, 3vw, 56px);
+  }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: $primary-color;
+    font-size: 14px;
+  }
+
+  // the logos come with their own shapes (Figma's dark square, React's dark circle), so no tile
+  &-icon {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+
+    @media (max-width: 900px) {
+      width: 90px;
+      height: 40px;
+    }
+  }
+}

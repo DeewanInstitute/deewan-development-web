@@ -3,6 +3,8 @@ import Layout from './components/layout/layout'
 import About from './pages/about/about'
 import Home from './pages/home/home'
 import Offer from './pages/offer/offer'
+import Portfolio from './pages/portfolio/portfolio'
+import Contact from './pages/contact/contact'
 import NotFoundPage from './pages/notFound/notFound'
 
 function App() {
@@ -11,7 +13,9 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/offer" element={<Offer />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

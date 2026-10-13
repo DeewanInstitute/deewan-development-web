@@ -1,0 +1,33 @@
+@use '../../style/variables' as *;
+@use '../../style/mixins' as *;
+
+.dw-pill {
+  display: grid;
+  place-items: center;
+  width: min(370px, 100%);
+  height: 45px;
+  margin: 0 auto;
+  border: 4px solid $primary-color;
+  border-radius: 10px 100px;
+  background: $primary-color;
+
+  span {
+    color: $white;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 5px;
+    line-height: 1;
+    padding-left: 5px; // balances the trailing letter-spacing
+    text-transform: uppercase;
+  }
+
+  @include mobile {
+    width: min(300px, 100%);
+    height: 40px;
+
+    span {
+      font-size: 15px;
+      letter-spacing: 4px;
+    }
+  }
+}

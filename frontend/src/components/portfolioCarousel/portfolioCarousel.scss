@@ -1,0 +1,399 @@
+@use '../../style/variables' as *;
+@use '../../style/mixins' as *;
+
+// Everything inside .pf-canvas is measured in "design px"; the canvas is scaled to fit (see the .tsx).
+
+.pf-stage {
+  position: relative;
+  width: 100%;
+
+  &.is-measuring {
+    visibility: hidden;
+  }
+}
+
+.pf-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+}
+
+// ─── Cards ───────────────────────────────────────────────────────────────
+
+// GSAP sets x / y / width / height / z-index / opacity. Radii only change with the slot.
+.pf-card {
+  --offset: 26px;
+  --border: 1.5px;
+  --front-radius: 10px 50px;
+  --back-radius: 10px 50px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  opacity: 0; // GSAP shows it once it has placed the card
+  cursor: pointer;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+
+  &[data-slot='0'] {
+    --border: 2px;
+    --front-radius: 20px 70px;
+  }
+
+  &:focus-visible {
+    outline: 3px solid $amber;
+    outline-offset: 10px;
+    border-radius: 20px;
+  }
+
+  // teal slab behind the card, peeking out up and to the left
+  &-back,
+  &-front {
+    position: absolute;
+    border: var(--border) solid $amber;
+    transition: border-radius 0.9s ease;
+  }
+
+  &-back {
+    inset: 0 var(--offset) var(--offset) 0;
+    border-radius: var(--back-radius);
+    background: $primary-color;
+  }
+
+  &-front {
+    inset: var(--offset) 0 0 var(--offset);
+    display: grid;
+    place-items: center;
+    padding: 5% 6%;
+    border-radius: var(--front-radius);
+    background: $white;
+    overflow: hidden;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      user-select: none;
+    }
+  }
+
+  &:not([data-slot='0']):hover .pf-card-front {
+    box-shadow: 0 0 0 4px rgba($amber, 0.45);
+  }
+
+  &[data-slot='0'] .pf-card-front {
+    transition:
+      border-radius 0.9s ease,
+      box-shadow 0.4s ease;
+  }
+
+  &[data-slot='0']:hover .pf-card-front,
+  &[data-slot='0']:focus-visible .pf-card-front {
+    box-shadow: 0 18px 40px rgba($primary-color, 0.25);
+  }
+}
+
+.pf-canvas-compact .pf-card {
+  --offset: 18px;
+}
+
+// Spotlight: hovering (or tabbing to) a card dims the rest and brightens it.
+// It uses `filter`, not `opacity`, because GSAP owns the cards' opacity.
+.pf-card {
+  transition: filter 0.4s ease;
+}
+
+@media (hover: hover) {
+  .pf-stage:not(.is-unlocked) .pf-canvas:has(.pf-card:hover, .pf-card:focus-visible) {
+    .pf-card {
+      filter: opacity(0.35) saturate(0.5) blur(1.5px);
+    }
+
+    .pf-card:hover,
+    .pf-card:focus-visible {
+      filter: brightness(1.06) saturate(1.15) drop-shadow(0 14px 28px rgba($primary-color, 0.28));
+    }
+  }
+}
+
+.pf-stage.is-unlocked .pf-card:not([data-slot='0']) {
+  pointer-events: none;
+}
+
+.pf-stage.is-unlocked .pf-shadow {
+  fill-opacity: 0.45;
+}
+
+.pf-shadow {
+  position: absolute;
+  z-index: 3;
+  fill: $amber;
+  transition: fill-opacity 0.6s ease;
+  overflow: visible;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+// ─── Padlock on the middle card ──────────────────────────────────────────
+
+.pf-lock {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  border: 2px solid $amber;
+  border-radius: 50%;
+  background: $primary-color;
+  color: $amber;
+  box-shadow: 0 8px 20px rgba($primary-color, 0.35);
+  animation: pf-lock-in 0.5s ease 0.7s backwards;
+  transition:
+    opacity 0.5s ease 0.15s,
+    transform 0.5s ease 0.15s;
+
+  svg {
+    width: 44px;
+    height: 44px;
+    stroke: currentColor;
+  }
+
+  &-body {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  &-key {
+    fill: $primary-color;
+  }
+
+  &-shackle {
+    transform-origin: 16.5px 11px;
+    transition: transform 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+
+  // a ring that keeps asking to be clicked
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border: 2px solid $amber;
+    border-radius: 50%;
+    animation: pf-lock-ping 2.6s ease-out infinite;
+  }
+
+  &.is-opening {
+    transform: scale(1.12);
+
+    .pf-lock-shackle {
+      transform: translateY(-3px) rotate(32deg);
+    }
+  }
+
+  &.is-open {
+    opacity: 0;
+    transform: scale(0.6);
+
+    .pf-lock-shackle {
+      transform: translateY(-3px) rotate(32deg);
+    }
+  }
+
+  &.is-opening::after,
+  &.is-open::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+.pf-canvas-compact .pf-lock {
+  right: 14px;
+  bottom: 14px;
+  width: 64px;
+  height: 64px;
+
+  svg {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@keyframes pf-lock-in {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+@keyframes pf-lock-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  70%,
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+// ─── Hand-written notes + arrows ─────────────────────────────────────────
+
+.pf-tags {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.pf-tag {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  width: max-content;
+  opacity: 0;
+  transform: translateY(18px) rotate(var(--tilt)) scale(0.9);
+  transition:
+    opacity 0.45s ease calc(var(--i) * 0.09s),
+    transform 0.55s cubic-bezier(0.3, 1.5, 0.5, 1) calc(var(--i) * 0.09s);
+
+  &-right {
+    flex-direction: row-reverse;
+  }
+
+  &-text {
+    color: $primary-color;
+    font-family: $font-hand;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  // arrow.webp runs from its curl (top right) down to the head (bottom left): it leaves the card and
+  // points at the note, as is for the left-hand notes and mirrored for the right-hand ones.
+  // On hover it draws itself from the card end, then keeps nudging toward the note.
+  &-arrow {
+    --nudge-x: -5px; // head points down-left
+    --nudge-y: 5px;
+
+    flex: none;
+    width: 200px;
+    margin-top: -40px;
+  }
+
+  &-right &-arrow {
+    --nudge-x: 5px; // mirrored: down-right
+    transform: scaleX(-1);
+  }
+
+  &-text {
+    padding-top: 50px;
+  }
+}
+
+.pf-canvas-compact .pf-tag {
+  max-width: 300px;
+
+  &-text {
+    font-size: 30px;
+  }
+
+  &-arrow {
+    width: 92px;
+  }
+}
+
+.pf-tags.is-visible .pf-tag {
+  opacity: 1;
+  transform: rotate(var(--tilt));
+
+  // `both` keeps it hidden through the delay; it stays drawn while the note fades out
+  &-arrow {
+    animation:
+      pf-arrow-draw 0.9s ease-out calc(0.4s + var(--i) * 0.09s) 1 normal both,
+      dw-arrow-nudge 2.4s ease-in-out calc(1.3s + var(--i) * 0.09s) infinite normal none;
+  }
+}
+
+// the wipe runs in the image's own space, so it starts at the curl on mirrored arrows too
+@keyframes pf-arrow-draw {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+
+  to {
+    clip-path: inset(0);
+  }
+}
+
+// once unlocked the notes stay, but the arrows have done their job
+.pf-tags.is-unlocked .pf-tag-arrow {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+// no hover on touch screens: show the notes for the middle card all the time
+@media (hover: none) {
+  .pf-tags .pf-tag {
+    opacity: 1;
+    transform: rotate(var(--tilt));
+
+    &-arrow {
+      animation: dw-arrow-nudge 2.4s ease-in-out 1.3s infinite;
+    }
+  }
+}
+
+// ─── Hint under the stage ────────────────────────────────────────────────
+
+.pf-hint {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+  min-height: 48px;
+
+  p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: $primary-color;
+    font-family: $font-hand;
+    font-weight: 700;
+    font-size: 22px;
+    text-align: center;
+
+    svg {
+      flex: none;
+      width: 22px;
+      height: 22px;
+    }
+
+    @include mobile {
+      font-size: 18px;
+    }
+  }
+}
+
+@include reduced-motion {
+  .pf-lock::after,
+  .pf-tags .pf-tag-arrow {
+    animation: none;
+  }
+
+  .pf-tag,
+  .pf-tag-arrow,
+  .pf-lock,
+  .pf-lock-shackle {
+    transition: none;
+  }
+}

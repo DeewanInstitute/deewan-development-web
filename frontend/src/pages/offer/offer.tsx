@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import LottieGlobe from '../../components/lottieGlobe/lottieGlobe'
 import Button from '../../components/button/button'
 import SplitWords from '../../components/splitWords/splitWords'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
@@ -16,8 +17,12 @@ function Offer() {
   return (
     <div ref={pageRef} className="offer">
       <section className="offer-hero">
-        <div className="offer-shape offer-shape-left offer-hero-shape dw-float" data-reveal="fade" />
-        <div className="offer-shape offer-shape-right offer-hero-shape dw-float" data-reveal="fade" />
+        <div className="offer-shape offer-shape-left offer-hero-shape" data-reveal="fade">
+          <LottieGlobe className="offer-shape-globe" />
+        </div>
+        <div className="offer-shape offer-shape-right offer-hero-shape" data-reveal="fade">
+          <LottieGlobe className="offer-shape-globe" />
+        </div>
 
         <div className="dw-container">
           <div className="offer-hero-card" data-reveal="zoom">
@@ -37,10 +42,9 @@ function Offer() {
       {offers.map(({ id, eyebrow, title, intro, capabilities, image, decor }, index) => (
         <section key={id} id={id} className={`offer-item${index % 2 ? ' offer-item-flip' : ''}`}>
           {decor && (
-            <div
-              className={`offer-shape offer-shape-${decor} offer-item-shape dw-float`}
-              data-reveal="fade"
-            />
+            <div className={`offer-shape offer-shape-${decor} offer-item-shape`} data-reveal="fade">
+              <LottieGlobe className="offer-shape-globe" />
+            </div>
           )}
 
           <div className="dw-container">
@@ -77,6 +81,9 @@ function Offer() {
                     </li>
                   ))}
                 </ul>
+        <div className="offer-shape offer-shape-right offer-hero-shape" data-reveal="fade">
+          <LottieGlobe className="offer-shape-globe" />
+        </div>
 
                 <div data-reveal="up">
                   <Button to="/contact" variant="amber" className="offer-contact">

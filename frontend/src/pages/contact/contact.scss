@@ -1,0 +1,353 @@
+@use '../../style/variables' as *;
+@use '../../style/mixins' as *;
+
+.contact {
+  position: relative;
+  overflow-x: clip;
+  padding-block: 90px 110px;
+
+  @include tablet {
+    padding-block: 56px 80px;
+  }
+}
+
+// ─── Half-globes stuck to the page edges ─────────────────────────────────
+
+.contact-shape {
+  position: absolute;
+  width: clamp(60px, 7vw, 100px);
+  aspect-ratio: 1 / 2;
+  pointer-events: none;
+
+  // the globe is a full circle twice as wide as the strip, so the page edge cuts it in half
+  &-globe {
+    position: absolute;
+    top: 0;
+    width: 200%;
+    aspect-ratio: 1;
+  }
+
+  &-left {
+    top: 0;
+    left: 0;
+  }
+
+  &-left &-globe {
+    right: 0;
+  }
+
+  &-right {
+    right: 0;
+    bottom: -20px;
+  }
+
+  &-right &-globe {
+    left: 0;
+  }
+}
+
+// ─── Info + form ─────────────────────────────────────────────────────────
+
+.contact-body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 433px) minmax(0, 615px);
+  justify-content: space-between;
+  align-items: center;
+  gap: 64px;
+
+  @include desktop-small {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+.contact-info {
+  width: 100%;
+  max-width: 433px;
+
+  @include desktop-small {
+    max-width: 615px;
+  }
+}
+
+.contact-title {
+  margin: 0 0 22px;
+  color: $primary-color;
+  font-weight: 600;
+  font-size: clamp(40px, 4.7vw, 60px);
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+
+.contact-text {
+  margin: 0;
+  color: $primary-color;
+  font-family: $font-sans;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-top: 56px;
+
+  @include mobile {
+    gap: 32px;
+    margin-top: 40px;
+  }
+}
+
+.contact-detail {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  &-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background: $teal-soft;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      fill: $black;
+    }
+  }
+
+  &-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  &-label {
+    color: $primary-color;
+    font-family: $font-mono;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+
+  &-value {
+    color: $primary-color;
+    font-family: $font-sans;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    overflow-wrap: anywhere;
+  }
+
+  a.contact-detail-value {
+    @include focus-ring($primary-color);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ─── Form card ───────────────────────────────────────────────────────────
+
+.contact-card {
+  width: 100%;
+  padding: 80px 80px 80px 60px;
+  border: 10px solid $amber;
+  border-radius: 20px 100px;
+  background: $white;
+  box-shadow: 0 1px 2px rgba($black, 0.05);
+
+  @include mobile {
+    padding: 40px 22px;
+    border-width: 6px;
+    border-radius: 14px 60px;
+  }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+
+  @include mobile {
+    gap: 28px;
+  }
+}
+
+.contact-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-label {
+  color: $primary-color;
+  font-family: $font-mono;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.contact-input {
+  width: 100%;
+  padding: 14px 24px;
+  border: 1px solid $primary-color;
+  border-radius: 2px 50px;
+  outline: none;
+  color: $white;
+  background: $primary-color;
+  font-family: $font-sans;
+  font-size: 16px;
+  line-height: 19px;
+  transition: box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: rgba($off-white, 0.85);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px $amber;
+  }
+}
+
+// Native arrow hidden; a white chevron sits on the right instead
+.contact-select {
+  position: relative;
+  display: block;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 64px;
+    width: 8px;
+    height: 8px;
+    border: solid $off-white;
+    border-width: 0 1.8px 1.8px 0;
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+
+  .contact-input {
+    height: 50px;
+    padding: 12px 88px 12px 24px;
+    border-color: $off-white;
+    border-radius: 2px 50px 2px 2px;
+    line-height: 24px;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  // the disabled placeholder option reads like a placeholder
+  .contact-input:has(option[value='']:checked) {
+    color: rgba($off-white, 0.85);
+  }
+
+  option {
+    color: $primary-color;
+    background: $white;
+  }
+}
+
+.contact-textarea {
+  min-height: 122px;
+  padding: 12px 24px;
+  border-color: $off-white;
+  border-radius: 2px 50px 2px 2px;
+  line-height: 24px;
+  resize: vertical;
+}
+
+// ─── Submit ──────────────────────────────────────────────────────────────
+
+.contact-submit {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-button {
+  width: 100%;
+  height: 72px;
+  border: 0;
+  border-radius: 10px 50px;
+  color: $off-white;
+  background: $teal-soft;
+  font-family: $font-mono;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  transition:
+    border-radius 0.35s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+  @include focus-ring($primary-color);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    border-radius: 50px 10px;
+    background: $primary-color-light;
+    box-shadow: 0 8px 18px rgba($teal-soft, 0.6);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: progress;
+  }
+
+  @include mobile {
+    height: 60px;
+  }
+}
+
+.contact-status {
+  margin: 0;
+  font-family: $font-sans;
+  font-size: 14px;
+  line-height: 20px;
+
+  &:empty {
+    display: none;
+  }
+
+  &-sent {
+    color: $primary-color;
+  }
+
+  &-error {
+    color: $coral;
+  }
+}
+
+@include reduced-motion {
+  .contact-button,
+  .contact-input {
+    transition: none;
+  }
+}

@@ -28,7 +28,7 @@ export const aboutServices = {
     { title: 'Web Design & Development', image: `${images}/our-service-1.webp`, to: '/offer#web' },
     { title: 'Mobile App Design', image: `${images}/our-services-2.webp`, to: '/offer#mobile' },
     { title: 'UI/UX Design', image: `${images}/our-services-4.webp`, to: '/offer#ux' },
-    { title: 'Social Media Management', image: `${images}/our-services-5.webp`, to: '/offer#social' },
+    { title: 'Social Media Management', image: `${images}/our-services-3.webp`, to: '/offer#social' },
     { title: 'Digital Marketing', image: `${images}/our-services-6.webp`, to: '/offer#marketing' },
   ] satisfies Service[],
 }

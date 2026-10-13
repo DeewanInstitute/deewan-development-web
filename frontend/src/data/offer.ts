@@ -96,7 +96,7 @@ export const offers: Offer[] = [
       'Community engagement',
       'Performance monitoring',
     ],
-    image: `${art}/our-services-5.webp`,
+    image: `${art}/our-services-3.webp`,
     decor: 'left',
   },
   {

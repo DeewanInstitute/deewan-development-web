@@ -1,0 +1,72 @@
+@use '../../style/variables' as *;
+@use '../../style/mixins' as *;
+
+.pf {
+  overflow-x: clip;
+}
+
+.pf-hero {
+  position: relative;
+  padding-block: 70px 40px;
+}
+
+.pf-heading {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  h1 {
+    margin: 14px 0 10px;
+    color: $primary-color;
+    font-size: clamp(44px, 6.25vw, 80px);
+    line-height: 1.125;
+  }
+}
+
+// ─── Half-globes stuck to the page edges ─────────────────────────────────
+
+.pf-shape {
+  position: absolute;
+  width: clamp(90px, 13vw, 210px);
+  aspect-ratio: 627 / 975;
+  pointer-events: none;
+
+  // the globe is a full circle twice as wide as the strip, so the page edge cuts it in half
+  &-globe {
+    position: absolute;
+    top: 0;
+    width: 200%;
+    aspect-ratio: 1;
+  }
+
+  &-left {
+    left: 0;
+    bottom: 40px;
+  }
+
+  &-left &-globe {
+    right: -30%;
+  }
+
+  &-right {
+    right: 0;
+    bottom: 80px;
+  }
+
+  &-right &-globe {
+    left: -30%;
+  }
+
+  @include tablet {
+    &-left {
+      bottom: 120px;
+    }
+
+    &-right {
+      bottom: 160px;
+    }
+  }
+}
