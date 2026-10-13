@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '../../components/button/button'
+import HeroArt from '../../components/heroArt/heroArt'
 import PillLabel from '../../components/pillLabel/pillLabel'
 import RoughArrow from '../../components/roughArrow/roughArrow'
 import ServiceSlider from '../../components/serviceSlider/serviceSlider'
@@ -31,7 +32,7 @@ function Home() {
 
       <section className="home-hero">
         <div className="home-hero-card home-wide" data-reveal="zoom">
-          <div className="home-hero-art" aria-hidden="true" />
+          <HeroArt />
 
           <div className="home-hero-body">
             <h1 className="home-hero-title" data-reveal="words">
