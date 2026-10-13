@@ -1,0 +1,35 @@
+@use '../../style/variables' as *;
+
+// Width is set by the parent through --rough-size; the circle keeps the design's 50 : 49 shape.
+.dw-rough {
+  --rough-size: 50px;
+
+  position: relative;
+  display: block;
+  flex: none;
+  width: var(--rough-size);
+  aspect-ratio: 50 / 49;
+
+  &-disc {
+    position: absolute;
+    inset: 0;
+    background: $amber;
+    mask: url('/assets/images/home/circle-mask-small.webp') center / 100% 100% no-repeat;
+  }
+
+  &-large &-disc {
+    mask-image: url('/assets/images/home/circle-mask-large.webp');
+  }
+
+  // the arrow glyph is drawn pointing up in the design and turned a quarter to point right
+  &-arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 49%;
+    height: auto;
+    translate: -50% -50%;
+    rotate: 90.49deg;
+    user-select: none;
+  }
+}

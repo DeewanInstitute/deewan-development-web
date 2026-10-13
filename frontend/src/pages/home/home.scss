@@ -1,0 +1,347 @@
+@use '../../style/variables' as *;
+@use '../../style/mixins' as *;
+
+// Laid out from the 1280 px wide design; measurements in the comments are the design's.
+// The design's page includes the header; <main> starts under it. The card is at y 149 in the design and
+// sits 4px into <main>, so design y minus this is the y inside .home.
+$design-offset: 145px;
+
+.home {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  padding-bottom: 144px; // portfolio card → footer
+
+  @include tablet {
+    padding-bottom: 80px;
+  }
+}
+
+// 1166 of 1280: the hero and the portfolio card sit 57px in from each side
+.home-wide {
+  width: 91.1%;
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+// columns keep 6% of air on small screens without eating into the design widths on big ones
+.home-title {
+  width: min(922px, 88%);
+  margin: 36px auto 0;
+  color: $primary-color;
+  font-size: clamp(34px, 4.7vw, 60px);
+  line-height: 1.333;
+}
+
+.home-title-line {
+  display: block;
+}
+
+// ─── Network background ──────────────────────────────────────────────────
+
+// The design's "mask group": a 3055 × 1720 network image, tinted coral at 10% and turned 112.82°.
+.home-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  &-back {
+    z-index: -1;
+  }
+
+  // in the design this copy sits above the hero and portfolio cards
+  &-front {
+    z-index: 1;
+  }
+
+  &-layer {
+    position: absolute;
+    width: 3055.5px;
+    height: 1720.5px;
+    background: $coral;
+    opacity: 0.1;
+    mask: url('/assets/images/home/network-mask.webp') 0 0 / 100% 100% no-repeat;
+    rotate: 112.82deg;
+  }
+
+  // layer centre in design coordinates, minus half its size and the header
+  &-back &-layer {
+    left: calc(50% - 1673.75px); // centre x 494
+    top: calc(3700px - 860.25px - #{$design-offset});
+  }
+
+  &-front &-layer {
+    left: calc(50% - 1832.75px); // centre x 335
+    top: calc(1834px - 860.25px - #{$design-offset});
+  }
+}
+
+// ─── Hero ────────────────────────────────────────────────────────────────
+
+.home-hero {
+  // 33px under the logo in the design; the header already carries 29px of bottom padding
+  padding-top: 4px;
+
+  &-card {
+    position: relative;
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1166 / 765;
+    padding: 48px clamp(20px, 5vw, 60px);
+    border-radius: 10px 100px;
+    background: $primary-color;
+    text-align: center;
+    overflow: hidden;
+
+    @include tablet {
+      aspect-ratio: auto;
+      min-height: 560px;
+      border-radius: 10px 60px;
+    }
+  }
+
+  // white shapes, mesh and spheres: a mask the size of the card, a little wider than it
+  &-art {
+    position: absolute;
+    inset: 0;
+    background: $white;
+    mask: url('/assets/images/home/hero-art-mask.webp') right top / 103.12% auto no-repeat;
+    pointer-events: none;
+
+    @include tablet {
+      mask-size: auto 100%;
+      mask-position: 50% 0;
+    }
+  }
+
+  &-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  &-title {
+    margin: 0;
+    color: $off-white;
+    font-weight: 400;
+    font-size: clamp(38px, 7.65cqw, 80px); // 80px when the card is 1166px wide
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+  }
+
+  &-line {
+    display: block;
+  }
+
+  // 583px in the design; our Merriweather is a little narrower, so this width gives the same three lines
+  &-text {
+    max-width: 30em;
+    margin: 19px 0 0;
+    color: $white;
+    font-size: 18px;
+    line-height: 28px;
+
+    @include mobile {
+      font-size: 16px;
+      line-height: 26px;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 17px;
+    width: 100%;
+    margin-top: 45px;
+
+    @include mobile {
+      flex-direction: column;
+      align-items: center;
+      margin-top: 32px;
+    }
+  }
+}
+
+// ─── Who we are / Services ───────────────────────────────────────────────
+
+.home-who,
+.home-services,
+.home-portfolio {
+  position: relative;
+  z-index: 2; // above the network copy that lies over the cards
+}
+
+.home-who {
+  padding-top: 129px;
+  text-align: center;
+
+  // 807px in the design; our Merriweather is narrower, and 730px breaks every line where the design does
+  &-text {
+    width: min(730px, 88%);
+    margin: 35px auto 0;
+    color: $primary-color;
+    font-size: 18px;
+    line-height: 28px;
+
+    p {
+      margin: 0;
+    }
+
+    @include mobile {
+      font-size: 16px;
+      line-height: 26px;
+    }
+  }
+
+  @include tablet {
+    padding-top: 80px;
+  }
+}
+
+.home-services {
+  padding: 84px 0 0;
+  text-align: center;
+
+  .home-title-services {
+    margin-top: 32px;
+  }
+
+  &-text {
+    width: min(794px, 88%);
+    margin: 44px auto 0;
+    color: $primary-color;
+    font-family: $font-sans;
+    font-size: 20px;
+    line-height: 24px;
+
+    @include mobile {
+      font-size: 17px;
+      line-height: 24px;
+    }
+  }
+
+  &-slider {
+    margin-top: 56px;
+    padding-inline: 4%;
+  }
+
+  @include tablet {
+    padding-top: 64px;
+  }
+}
+
+// ─── Portfolio ───────────────────────────────────────────────────────────
+
+.home-portfolio {
+  margin-top: 144px;
+
+  &-card {
+    padding: 48px 0 89px;
+    border-radius: 100px 10px;
+    background: $teal-mid;
+    text-align: center;
+  }
+
+  &-title {
+    color: $off-white;
+    margin-top: 35px;
+  }
+
+  &-text {
+    max-width: 900px;
+    margin: 17px 0 0 12.18%; // 142 of 1166
+    color: $white;
+    font-family: $font-sans;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: left;
+  }
+
+  &-project {
+    display: block;
+    color: $white;
+    @include focus-ring($amber);
+
+    &:hover .dw-rough {
+      transform: translateX(6px) scale(1.06);
+    }
+
+    .dw-rough {
+      --rough-size: 106px;
+      transition: transform 0.25s ease;
+    }
+  }
+
+  &-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin: 90px 14.15% 0 13.8%; // laptop → circle is 90px; 165 and 161 of 1166 at the sides
+  }
+
+  &-name {
+    font-weight: 700;
+    font-size: clamp(26px, 3.5vw, 45px);
+    line-height: 50px;
+    text-align: left;
+  }
+
+  @include tablet {
+    margin-top: 80px;
+
+    &-card {
+      padding: 36px 20px 40px;
+      border-radius: 60px 10px;
+    }
+
+    &-text {
+      margin-inline: auto;
+      font-size: 17px;
+    }
+
+    &-row {
+      margin: 36px 0 0;
+
+      .dw-rough {
+        --rough-size: 64px;
+      }
+    }
+  }
+}
+
+// ─── The laptop ──────────────────────────────────────────────────────────
+
+.home-laptop {
+  position: relative;
+  display: block;
+  width: min(922px, 100%);
+  margin: 23px auto 0;
+  aspect-ratio: 922 / 587;
+
+  &-frame,
+  &-screen {
+    position: absolute;
+    object-fit: cover;
+  }
+
+  &-frame {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  // the screen sits 13.05% from top and bottom, 12.91% from each side of the frame
+  &-screen {
+    inset: 13.05% 12.91%;
+    width: 74.18%;
+    height: 73.9%;
+  }
+}

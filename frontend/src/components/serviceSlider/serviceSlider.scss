@@ -1,0 +1,214 @@
+@use '../../style/variables' as *;
+@use '../../style/mixins' as *;
+
+// Everything inside is measured in --k, "one pixel of the 425 px wide design card", so a card keeps
+// its proportions at any width. The viewport is a size container, which makes cqw mean "% of the viewport".
+.dw-slider {
+  &-viewport {
+    --card: 41.627cqw; // 425 / 1021
+    --gap: 13.614cqw; // 139 / 1021
+    --pitch: 110.48cqw; // one page = two cards + the gap before the next page
+    --k: calc(var(--card) / 425);
+
+    container-type: inline-size;
+    width: 100%;
+    max-width: 1021px; // 989 of cards + room for the outline that peeks out to the right
+    margin-inline: auto;
+    // only the sideways overflow (the other pages) is clipped; the lifted card, its outline and
+    // its shadow must be free to go past the top and bottom edge on hover
+    overflow-x: clip;
+    overflow-y: visible;
+
+    // the design sits 9.5px right of the page centre
+    @media (min-width: 821px) {
+      translate: 9.5px 0;
+    }
+
+    // phones: one card per page, nudged right so card + outline sit centred in the viewport
+    @include tablet {
+      --card: 78cqw;
+      --gap: 22cqw;
+      --pitch: 100cqw;
+      --lead: 10.5cqw;
+    }
+  }
+
+  &-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--card);
+    column-gap: var(--gap);
+    margin: 0;
+    padding: calc(36 * var(--k)) 0 0 var(--lead, 0); // room for the outline that peeks out above the card
+    list-style: none;
+    transform: translateX(calc(var(--page, 0) * var(--pitch) * -1));
+    transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+
+    @include reduced-motion {
+      transition: none;
+    }
+  }
+
+  &-slide {
+    min-width: 0;
+
+    // the second card of the design stands 16px lower than the first
+    &:nth-child(even) {
+      padding-top: calc(16 * var(--k));
+    }
+  }
+
+  // The link is only a frame: the outline and the filled face are its two layers.
+  &-card {
+    --ox: calc(61 * var(--k)); // where the amber outline sits behind the face
+    --oy: calc(-36 * var(--k));
+
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 425 / 544;
+    transition: transform 0.25s ease;
+    @include focus-ring($primary-color);
+
+    // the outline is a child of the card, so it lifts together with it
+    &:hover {
+      transform: translateY(-4px);
+
+      .dw-slider-face {
+        box-shadow: 0 14px 28px rgba($primary-color, 0.25);
+      }
+    }
+  }
+
+  &-outline,
+  &-face {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    border: calc(5 * var(--k)) solid $amber;
+    border-radius: calc(5 * var(--k)) calc(100 * var(--k));
+  }
+
+  &-outline {
+    translate: var(--ox) var(--oy);
+    transition: translate 0.25s ease;
+  }
+
+  &-face {
+    display: block;
+    padding-top: calc(58 * var(--k));
+    text-align: left; // the section around it is centred
+    color: $white;
+    background: $primary-color;
+    transition: box-shadow 0.25s ease;
+  }
+
+  &-number {
+    display: block;
+    padding-left: calc(51 * var(--k));
+    font-weight: 800;
+    font-size: calc(100 * var(--k));
+    line-height: calc(100 * var(--k));
+    letter-spacing: calc(2 * var(--k));
+    text-transform: uppercase;
+  }
+
+  &-title {
+    margin: 0;
+    padding-left: calc(58 * var(--k));
+    color: $white;
+    font-size: calc(50 * var(--k));
+    line-height: calc(80 * var(--k));
+    letter-spacing: calc(2 * var(--k));
+    text-transform: capitalize;
+
+    span {
+      display: block;
+    }
+  }
+
+  &-more {
+    position: absolute;
+    right: calc(30 * var(--k));
+    bottom: calc(31 * var(--k));
+    display: flex;
+    align-items: center;
+    gap: calc(56 * var(--k));
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: calc(20 * var(--k));
+    line-height: calc(24 * var(--k));
+
+    .dw-rough {
+      --rough-size: calc(50 * var(--k));
+    }
+  }
+
+  &-card:hover .dw-rough {
+    transform: translateX(4px) scale(1.06);
+  }
+
+  .dw-rough {
+    transition: transform 0.25s ease;
+  }
+
+  // Design details of the second card: its number sits a touch right and higher, its title higher still,
+  // and its "View More" row is tighter. Kept so the first two cards match the design exactly.
+  &-slide:nth-child(even) &-card {
+    --ox: calc(32 * var(--k));
+    --oy: calc(-36 * var(--k) - 16 * var(--k));
+  }
+
+  &-slide:nth-child(even) &-number {
+    translate: calc(7 * var(--k)) calc(-16 * var(--k));
+  }
+
+  &-slide:nth-child(even) &-title {
+    translate: 0 calc(-26 * var(--k));
+  }
+
+  &-slide:nth-child(even) &-more {
+    right: calc(26 * var(--k));
+    bottom: calc(26 * var(--k));
+    gap: calc(36 * var(--k));
+
+    > span:first-child {
+      translate: 0 calc(-8 * var(--k));
+    }
+  }
+
+  // ─── Dots ──────────────────────────────────────────────────────────────
+
+  &-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 54px;
+
+    button {
+      position: relative;
+      width: 17px;
+      height: 18px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: $dot-idle;
+      transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+      @include focus-ring($primary-color);
+
+      // a bigger tap target than the dot itself
+      &::after {
+        content: '';
+        position: absolute;
+        inset: -9px;
+      }
+
+      &.is-active {
+        background: $amber;
+        transform: scale(1.15);
+      }
+    }
+  }
+}

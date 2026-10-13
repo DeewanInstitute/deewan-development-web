@@ -31,3 +31,45 @@
     }
   }
 }
+
+// Home page pills: smaller, letter-spaced caption on an amber (or white) leaf shape
+.dw-pill-amber,
+.dw-pill-outline {
+  width: min(209px, 100%);
+  height: 64px;
+
+  span {
+    @include eyebrow(2px);
+    font-size: 15px;
+    line-height: 16px;
+    padding-left: 2px; // balances the trailing letter-spacing
+  }
+
+  @include mobile {
+    width: min(209px, 100%);
+    height: 56px;
+
+    span {
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+  }
+}
+
+.dw-pill-amber {
+  border: 2px solid $primary-color;
+  background: $amber;
+
+  span {
+    color: $white;
+  }
+}
+
+.dw-pill-outline {
+  border: 1px solid $amber;
+  background: $white;
+
+  span {
+    color: $amber;
+  }
+}

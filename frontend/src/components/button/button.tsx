@@ -4,7 +4,7 @@ import './button.scss'
 
 type ButtonProps = {
   children: ReactNode
-  variant?: 'amber' | 'teal' | 'soft'
+  variant?: 'amber' | 'teal' | 'soft' | 'solid-amber' | 'solid-soft'
   to?: string
   href?: string
   onClick?: MouseEventHandler<HTMLElement>
