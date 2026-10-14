@@ -1,0 +1,333 @@
+@use '../../style/variables' as *;
+@use '../../style/mixins' as *;
+
+.sm {
+  overflow-x: clip;
+}
+
+.sm-hero {
+  padding-block: 70px 120px;
+}
+
+.sm-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  h1 {
+    max-width: 1025px;
+    margin: 18px 0 0;
+    color: $primary-color;
+    font-size: clamp(40px, 5.5vw, 70px);
+    line-height: 1.29;
+  }
+}
+
+.sm-carousel {
+  max-width: 1040px;
+  margin: 70px auto 0;
+}
+
+// ─── Number + category + name ────────────────────────────────────────────
+
+.sm-title {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 36px);
+
+  .dw-badge {
+    width: clamp(100px, 13vw, 160px);
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+.sm-category {
+  margin: 0 0 8px;
+  color: $amber;
+  font-weight: 700;
+  font-size: clamp(14px, 1.6vw, 20px);
+  letter-spacing: 5px;
+
+  @include mobile {
+    letter-spacing: 3px;
+  }
+}
+
+.sm-name {
+  margin: 0;
+  color: $primary-color;
+  font-weight: 400;
+  font-size: clamp(24px, 2.75vw, 35px);
+  line-height: 1.15;
+}
+
+.sm-description {
+  margin: 34px 0 0;
+  color: $black;
+  font-weight: 300;
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.5;
+}
+
+// ─── Mock-ups (float gently up and down) ─────────────────────────────────
+
+.sm-mockup {
+  max-width: 899px;
+  margin: 30px auto 0;
+  touch-action: pan-y; // vertical scroll stays native, horizontal swipes change the slide
+  user-select: none;
+
+  img {
+    width: 100%;
+  }
+}
+
+// ─── Arrows + dots ───────────────────────────────────────────────────────
+
+.sm-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 18px;
+}
+
+.sm-arrow {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 2px solid $amber;
+  border-radius: 10px 24px;
+  background: $primary-color;
+  transition:
+    border-radius 0.35s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  @include focus-ring;
+
+  svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: $amber;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &:hover {
+    border-radius: 24px 10px;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba($primary-color, 0.3);
+  }
+}
+
+.sm-dots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sm-dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: $blue-light-one;
+  transition:
+    width 0.4s ease,
+    background-color 0.3s ease;
+  @include focus-ring;
+
+  &:hover {
+    background: $primary-color-light;
+  }
+
+  &.is-active {
+    width: 34px;
+    background: $amber;
+  }
+}
+
+// ─── What we do ──────────────────────────────────────────────────────────
+
+.sm-subtitle {
+  margin: 60px 0 22px;
+  color: $primary-color;
+  font-size: clamp(24px, 2.4vw, 30px);
+}
+
+.sm-services {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
+
+  li {
+    display: grid;
+    place-items: center;
+    width: 228px;
+    min-height: 38px;
+    padding: 6px 18px;
+    border-radius: 50px 0;
+    background: $amber;
+    color: $white;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    transition:
+      border-radius 0.35s ease,
+      background-color 0.3s ease;
+
+    &:hover {
+      border-radius: 0 50px;
+      background: $primary-color;
+    }
+  }
+
+  @include mobile {
+    gap: 12px;
+
+    li {
+      width: calc(50% - 6px);
+      font-size: 13px;
+    }
+  }
+}
+
+// ─── Platforms: icon, a hand-drawn arrow, and its name written beside it ─
+
+.sm-platforms {
+  display: flex;
+  justify-content: center;
+  gap: clamp(40px, 6vw, 70px);
+  padding-block: 110px;
+
+  @include mobile {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 28px 60px;
+    padding-block: 10px;
+  }
+}
+
+.sm-platform {
+  position: relative;
+  width: 75px;
+
+  > a,
+  .sm-platform-icon {
+    display: block;
+    transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
+
+    img {
+      width: 100%;
+    }
+  }
+
+  > a:hover {
+    transform: translateY(-6px) rotate(-4deg);
+  }
+
+  > a {
+    @include focus-ring;
+    border-radius: 18px;
+  }
+
+  // arrow.webp points down-left; it is turned per spot so it always runs from the icon to the name
+  &-arrow {
+    --nudge-x: -4px;
+    --nudge-y: 4px;
+
+    position: absolute;
+    width: 70px;
+    pointer-events: none;
+    animation: dw-arrow-nudge 2.4s ease-in-out infinite;
+  }
+
+  &-name {
+    position: absolute;
+    width: max-content;
+    max-width: 190px;
+    color: $black;
+    font-family: $font-hand;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  &-below-left {
+    .sm-platform-arrow {
+      right: 62%;
+      top: 82%;
+    }
+
+    .sm-platform-name {
+      right: 135%;
+      top: 165%;
+    }
+  }
+
+  &-above-right {
+    .sm-platform-arrow {
+      --nudge-x: 4px;
+      --nudge-y: -4px;
+      left: 72%;
+      bottom: 78%;
+      transform: rotate(180deg);
+    }
+
+    .sm-platform-name {
+      left: 125%;
+      bottom: 160%;
+    }
+  }
+
+  &-below-right {
+    .sm-platform-arrow {
+      --nudge-x: 4px;
+      left: 62%;
+      top: 82%;
+      transform: scaleX(-1);
+    }
+
+    .sm-platform-name {
+      left: 140%;
+      top: 165%;
+    }
+  }
+
+  // phones: no room around the icons, so the name simply sits underneath
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 64px;
+
+    &-arrow {
+      display: none;
+    }
+
+    &-name {
+      position: static;
+      font-size: 17px;
+    }
+  }
+}
+
+@include reduced-motion {
+  .sm-platform-arrow {
+    animation: none;
+  }
+}

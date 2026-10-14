@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import LottieGlobe from '../../components/lottieGlobe/lottieGlobe'
 import Button from '../../components/button/button'
+import NumberBadge from '../../components/numberBadge/numberBadge'
 import SplitWords from '../../components/splitWords/splitWords'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { offerHero, offers } from '../../data/offer'
@@ -50,10 +51,7 @@ function Offer() {
           <div className="dw-container">
             {/* number badge, a line that draws itself, and a dot at the end */}
             <div className="offer-item-top">
-              <div className="offer-badge" data-reveal="pop">
-                <span className="offer-badge-ring" />
-                <span className="offer-badge-number">{String(index + 1).padStart(2, '0')}</span>
-              </div>
+              <NumberBadge number={index + 1} data-reveal="pop" />
               <span className="offer-item-line" data-reveal="line" />
               <span className="offer-item-dot" data-reveal="pop" />
             </div>

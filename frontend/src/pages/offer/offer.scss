@@ -249,33 +249,3 @@ $art: '/assets/images/offer';
   letter-spacing: 0;
   text-transform: capitalize;
 }
-
-// Number badge: the hatched yellow circle turns slowly behind a still number
-.offer-badge {
-  position: relative;
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: clamp(110px, 13.5vw, 173px);
-  aspect-ratio: 1;
-
-  &-ring {
-    position: absolute;
-    inset: 0;
-    animation: dw-spin-slow 40s linear infinite;
-    @include cropped('#{$art}/yellow-circle-big.webp', 585, 534, 103, 90, 384, 382);
-  }
-
-  &-number {
-    position: relative;
-    color: $off-white;
-    font-size: clamp(32px, 3.9vw, 50px);
-    letter-spacing: -0.96px;
-  }
-}
-
-@include reduced-motion {
-  .offer-badge-ring {
-    animation: none;
-  }
-}
