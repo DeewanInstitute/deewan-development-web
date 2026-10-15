@@ -1,0 +1,26 @@
+@use '../../style/variables' as *;
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: $white;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.45s ease, visibility 0s linear 0.45s;
+
+  &.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: none;
+  }
+
+  &-animation {
+    width: clamp(160px, 22vw, 280px);
+    aspect-ratio: 1;
+  }
+}

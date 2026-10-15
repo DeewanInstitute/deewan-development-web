@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 import lottie from 'lottie-web/build/player/lottie_light'
 
-type Props = { className?: string }
+type Props = { className?: string; src?: string }
 
 // The looping globe animation, drawn into a square box; the parent decides how much of it shows.
-function LottieGlobe({ className }: Props) {
+function LottieGlobe({ className, src = '/assets/lottie/globe.json' }: Props) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -15,10 +15,10 @@ function LottieGlobe({ className }: Props) {
       renderer: 'svg',
       loop: true,
       autoplay: !reduced,
-      path: '/assets/lottie/globe.json',
+      path: src,
     })
     return () => animation.destroy()
-  }, [])
+  }, [src])
 
   return <div ref={ref} className={className} aria-hidden="true" />
 }
