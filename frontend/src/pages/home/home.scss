@@ -116,6 +116,33 @@ $design-offset: 145px;
       mask-size: auto 100%;
       mask-position: 50% 0;
     }
+
+    // the animation draws the shapes, so the still image keeps only the mesh and the speckles
+    &.is-animated {
+      mask-image: url('/assets/images/home/hero-mesh-mask.webp');
+    }
+  }
+
+  // the Lottie sits exactly where the still art does
+  &-lottie {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 103.12%;
+    aspect-ratio: 1202 / 802;
+    pointer-events: none;
+
+    svg {
+      display: block;
+    }
+
+    @include tablet {
+      right: auto;
+      left: 50%;
+      width: auto;
+      height: 100%;
+      translate: -50% 0;
+    }
   }
 
   &-body {
